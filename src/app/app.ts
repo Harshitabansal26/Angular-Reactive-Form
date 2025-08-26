@@ -1,12 +1,10 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
+import { Form } from './form/form'; // Import the Form component
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.html',
-  styleUrl: './app.css'
+  standalone: true, // The standalone flag is required for this modern setup
+  imports: [Form], // Import the Form component directly here
+  template: '<app-form></app-form>' // Render the Form component
 })
-export class App {
-  protected readonly title = signal('Task1-Reactive-form');
-}
+export class App { }
