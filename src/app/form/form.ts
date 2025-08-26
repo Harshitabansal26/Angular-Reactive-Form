@@ -1,7 +1,7 @@
-
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray, ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common'; // Needed for *ngIf, *ngFor
+import { CommonModule } from '@angular/common';
+import { Application } from '../application';  
 
 @Component({
   selector: 'app-form',
@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common'; // Needed for *ngIf, *ngFor
 export class Form implements OnInit {
   applicationForm!: FormGroup;
   uploadedFiles: File[] = [];
-  isModalVisible: boolean = false; // New state variable for the modal
+  isModalVisible: boolean = false;
 
   // Static data for dropdowns and checkboxes
   productOptions = [
@@ -28,7 +28,7 @@ export class Form implements OnInit {
   parishes = ['Kingston', 'St. Andrew', 'Trelawny', 'St. Catherine'];
   businessTypes = ['Retail', 'Service', 'Manufacturing'];
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private appService: Application) { }
 
   ngOnInit(): void {
     this.applicationForm = this.fb.group({
@@ -70,7 +70,6 @@ export class Form implements OnInit {
     this.addCheckboxes();
   }
 
-  // ✅ Recursive helper to mark all fields as touched
   private markFormGroupTouched(formGroup: FormGroup | FormArray) {
     Object.values(formGroup.controls).forEach(control => {
       if (control instanceof FormGroup || control instanceof FormArray) {
@@ -81,30 +80,47 @@ export class Form implements OnInit {
     });
   }
 
-  // New method to open the modal
   openModal(): void {
     if (this.applicationForm.valid) {
       this.isModalVisible = true;
     } else {
-      this.markFormGroupTouched(this.applicationForm); // ✅ show errors immediately
+      this.markFormGroupTouched(this.applicationForm);
     }
   }
 
-  // New method to close the modal
   closeModal(): void {
     this.isModalVisible = false;
   }
 
-  // The submission logic is now called by the modal's "Confirm" button
+  // ✅ Updated onSubmit with API call
   onSubmit(): void {
-    if (this.applicationForm.valid) {
-      console.log('Form Submitted!', this.applicationForm.value);
-      this.closeModal(); // Close the modal after submission
-    } else {
-      console.log('Form is invalid. Please correct the errors.');
-      this.markFormGroupTouched(this.applicationForm); 
-    }
+  if (this.applicationForm.valid) {
+    const rawData = this.applicationForm.value;
+
+    // ✅ Convert boolean array to product names
+    const productOptions = ['lottery', 'casino', 'sports'];
+    rawData.product = rawData.product
+      ?.map((checked: boolean, i: number) => (checked ? productOptions[i] : null))
+      .filter((v: string | null) => v !== null);
+
+    // Save via service
+    this.appService.addApplication(rawData).subscribe({
+      next: (res) => {
+        console.log('Application saved:', res);
+        alert('Application submitted successfully!');
+        this.closeModal();
+      },
+      error: (err) => {
+        console.error('Error saving application', err);
+        alert('Failed to submit application.');
+      }
+    });
+  } else {
+    console.log('Form is invalid. Please correct the errors.');
+    this.markFormGroupTouched(this.applicationForm); // ✅ kept from old code
   }
+}
+
 
   private addCheckboxes(): void {
     this.productOptions.forEach(() => (this.applicationForm.get('product') as FormArray).push(this.fb.control(false)));
@@ -151,15 +167,14 @@ export class Form implements OnInit {
   }
 
   private handleFiles(files: FileList | null): void {
-  if (files) {
-    for (let i = 0; i < files.length && this.uploadedFiles.length < 10; i++) {
-      this.uploadedFiles.push(files[i]);
-    }
+    if (files) {
+      for (let i = 0; i < files.length && this.uploadedFiles.length < 10; i++) {
+        this.uploadedFiles.push(files[i]);
+      }
 
-    if (this.uploadedFiles.length === 10) {
-      alert('You have reached the maximum limit of 10 files.');
+      if (this.uploadedFiles.length === 10) {
+        alert('You have reached the maximum limit of 10 files.');
+      }
     }
   }
-}
-
 }

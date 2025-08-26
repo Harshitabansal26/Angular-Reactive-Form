@@ -1,0 +1,55 @@
+<div class="home-container">
+  <h1>Welcome!</h1>
+  <button class="btn btn-primary mb-3" [routerLink]="['/form']">
+    Go to Application Form
+  </button>
+
+  <h2>Submitted Applications</h2>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>S. No</th>
+        <th>Product</th>
+        <th>Application Source</th>
+        <th>Title</th>
+        <th>Full Name</th>
+        <th>Email</th>
+        <th>DOB</th>
+        <th>Cellphone</th>
+        <th>Gender</th>
+        <th>Business Name</th>
+        <th>Type of Business</th>
+        <th>Country</th>
+        <th>Parish</th>
+        <th>Address</th>
+        <th>Years in Operation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let app of applications; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ app.product?.join(', ') }}</td>
+        <td>{{ app.applicationSource }}</td>
+        <td>{{ app.personalDetails?.title }}</td>
+        <td>
+          {{ app.personalDetails?.firstName }} 
+          {{ app.personalDetails?.middleName }} 
+          {{ app.personalDetails?.lastName }}
+        </td>
+        <td>{{ app.personalDetails?.email }}</td>
+        <td>{{ app.personalDetails?.dateOfBirth }}</td>
+        <td>{{ app.personalDetails?.cellphone }}</td>
+        <td>{{ app.personalDetails?.gender }}</td>
+        <td>{{ app.businessInformation?.businessName }}</td>
+        <td>{{ app.businessInformation?.typeOfBusiness }}</td>
+        <td>{{ app.businessInformation?.country }}</td>
+        <td>{{ app.businessInformation?.parish }}</td>
+        <td>{{ app.businessInformation?.address }}</td>
+        <td>{{ app.businessInformation?.yearsInOperation }}</td>
+      </tr>
+    </tbody>
+  </table>
+<ng-template #noData>
+  <p>No applications submitted yet.</p>
+</ng-template>

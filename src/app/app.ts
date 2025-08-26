@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { Form } from './form/form'; // Import the Form component
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  standalone: true, // The standalone flag is required for this modern setup
-  imports: [Form], // Import the Form component directly here
-  template: '<app-form></app-form>' // Render the Form component
+  standalone: true, 
+  imports: [RouterOutlet], 
+  template:  `<router-outlet></router-outlet>` 
 })
 export class App { }

@@ -1,0 +1,48 @@
+/* src/app/home/home.css */
+
+/* Container takes full width */
+.home-container {
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Table styles */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  table-layout: fixed; /* important for wrapping */
+}
+
+/* Table header */
+.table th {
+  background-color: #f8f9fa;
+  text-align: left;
+  padding: 12px;
+  border: 1px solid #ddd;
+  font-weight: bold;
+  white-space: normal; /* ✅ allow wrapping */
+  word-break: break-word; /* ✅ break long words if needed */
+  overflow-wrap: anywhere; /* ✅ ensures long words (like IDs) wrap */
+}
+
+/* Table body */
+.table td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  vertical-align: top;
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow-wrap: anywhere; /* ensures wrapping */
+}
+
+/* Zebra striping for readability */
+.table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Hover effect */
+.table tbody tr:hover {
+  background-color: #f1f1f1;
+}

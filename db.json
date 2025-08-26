@@ -1,0 +1,309 @@
+{
+  "applications": [
+    {
+      "id": "095d",
+      "product": [
+        "lottery"
+      ],
+      "applicationSource": "Referral",
+      "residentInfo": {
+        "isResidentJamaica": "Yes",
+        "isExistingRetailer": "Yes"
+      },
+      "personalDetails": {
+        "title": "Mrs.",
+        "firstName": "Harshita",
+        "middleName": "",
+        "lastName": "bansal",
+        "email": "harshitabansal3142@gmail.com",
+        "dateOfBirth": "2025-08-14",
+        "cellphone": "07986037921",
+        "businessPhone": "",
+        "homePhone": "",
+        "gender": "Male",
+        "addCoApplicant": "Yes"
+      },
+      "businessInformation": {
+        "businessName": "asdfg",
+        "typeOfBusiness": "Service",
+        "country": "United States",
+        "parish": "St. Andrew",
+        "town": "Chandigarh",
+        "district": "",
+        "postalCode": "160019",
+        "address": "#3142\nSector -27 D",
+        "doYouOwnBusiness": "No",
+        "yearsInOperation": 4,
+        "ownOrRentLocation": "Own"
+      },
+      "fileUpload": "C:\\fakepath\\image (1).png"
+    },
+    {
+      "id": "3ab4",
+      "product": [
+        "lottery"
+      ],
+      "applicationSource": "Referral",
+      "residentInfo": {
+        "isResidentJamaica": "Yes",
+        "isExistingRetailer": "Yes"
+      },
+      "personalDetails": {
+        "title": "Mr.",
+        "firstName": "my first name",
+        "middleName": "my middle name",
+        "lastName": "my last name",
+        "email": "me@mydomain.com",
+        "dateOfBirth": "2025-08-14",
+        "cellphone": "(123) 456-7890",
+        "businessPhone": "(123) 456-7890",
+        "homePhone": "(123) 456-7890",
+        "gender": "Male",
+        "addCoApplicant": "No"
+      },
+      "businessInformation": {
+        "businessName": "my full name",
+        "typeOfBusiness": "Retail",
+        "country": "United States",
+        "parish": "St. Andrew",
+        "town": "zip code or postal code",
+        "district": "zip code or postal code",
+        "postalCode": "zip code or postal code",
+        "address": "full street address",
+        "doYouOwnBusiness": "No",
+        "yearsInOperation": 3,
+        "ownOrRentLocation": "Rent"
+      },
+      "fileUpload": "C:\\fakepath\\image.jpg"
+    },
+    {
+      "id": "bd1b",
+      "product": [
+        "lottery"
+      ],
+      "applicationSource": "Referral",
+      "residentInfo": {
+        "isResidentJamaica": "Yes",
+        "isExistingRetailer": "Yes"
+      },
+      "personalDetails": {
+        "title": "Ms.",
+        "firstName": "Harshita",
+        "middleName": "",
+        "lastName": "bansal",
+        "email": "harshitabansal3142@gmail.com",
+        "dateOfBirth": "2025-08-08",
+        "cellphone": "07986037921",
+        "businessPhone": "",
+        "homePhone": "",
+        "gender": "Male",
+        "addCoApplicant": "Yes"
+      },
+      "businessInformation": {
+        "businessName": "asdfg",
+        "typeOfBusiness": "Service",
+        "country": "United States",
+        "parish": "Trelawny",
+        "town": "Chandigarh",
+        "district": "",
+        "postalCode": "160019",
+        "address": "#3142\nSector -27 D",
+        "doYouOwnBusiness": "No",
+        "yearsInOperation": 3,
+        "ownOrRentLocation": "Rent"
+      },
+      "fileUpload": ""
+    },
+    {
+      "id": "c283",
+      "product": [
+        "lottery"
+      ],
+      "applicationSource": "Referral",
+      "residentInfo": {
+        "isResidentJamaica": "Yes",
+        "isExistingRetailer": "Yes"
+      },
+      "personalDetails": {
+        "title": "Ms.",
+        "firstName": "Harshita",
+        "middleName": "",
+        "lastName": "bansal",
+        "email": "harshitabansal3142@gmail.com",
+        "dateOfBirth": "2025-08-08",
+        "cellphone": "07986037921",
+        "businessPhone": "",
+        "homePhone": "",
+        "gender": "Male",
+        "addCoApplicant": "Yes"
+      },
+      "businessInformation": {
+        "businessName": "asdfg",
+        "typeOfBusiness": "Service",
+        "country": "United States",
+        "parish": "Trelawny",
+        "town": "Chandigarh",
+        "district": "",
+        "postalCode": "160019",
+        "address": "#3142\nSector -27 D",
+        "doYouOwnBusiness": "No",
+        "yearsInOperation": 3,
+        "ownOrRentLocation": "Rent"
+      },
+      "fileUpload": ""
+    },
+    {
+      "id": "2b6f",
+      "product": [
+        "casino",
+        "sports"
+      ],
+      "applicationSource": "In-Person",
+      "residentInfo": {
+        "isResidentJamaica": "No",
+        "isExistingRetailer": "Yes"
+      },
+      "personalDetails": {
+        "title": "Ms.",
+        "firstName": "asdf",
+        "middleName": "",
+        "lastName": "ghjkl",
+        "email": "abcd@g.com",
+        "dateOfBirth": "2022-02-01",
+        "cellphone": "1234567890",
+        "businessPhone": "",
+        "homePhone": "",
+        "gender": "Female",
+        "addCoApplicant": "Yes"
+      },
+      "businessInformation": {
+        "businessName": "qwertyu",
+        "typeOfBusiness": "Service",
+        "country": "Jamaica",
+        "parish": "Trelawny",
+        "town": "",
+        "district": "",
+        "postalCode": "",
+        "address": "zxcvbnm",
+        "doYouOwnBusiness": "Yes",
+        "yearsInOperation": 7,
+        "ownOrRentLocation": "Own"
+      },
+      "fileUpload": ""
+    },
+    {
+      "id": "2f95",
+      "product": [
+        "lottery"
+      ],
+      "applicationSource": "Website",
+      "residentInfo": {
+        "isResidentJamaica": "Yes",
+        "isExistingRetailer": "Yes"
+      },
+      "personalDetails": {
+        "title": "Mrs.",
+        "firstName": "Harshita",
+        "middleName": "",
+        "lastName": "bansal",
+        "email": "harshitabansal3142@gmail.com",
+        "dateOfBirth": "2025-08-02",
+        "cellphone": "07986037921",
+        "businessPhone": "",
+        "homePhone": "",
+        "gender": "Female",
+        "addCoApplicant": "Yes"
+      },
+      "businessInformation": {
+        "businessName": "my full name",
+        "typeOfBusiness": "Manufacturing",
+        "country": "United States",
+        "parish": "St. Catherine",
+        "town": "Chandigarh",
+        "district": "",
+        "postalCode": "160019",
+        "address": "#3142\nSector -27 D",
+        "doYouOwnBusiness": "No",
+        "yearsInOperation": 8,
+        "ownOrRentLocation": "Rent"
+      },
+      "fileUpload": ""
+    },
+    {
+      "id": "432f",
+      "product": [
+        "lottery"
+      ],
+      "applicationSource": "Website",
+      "residentInfo": {
+        "isResidentJamaica": "Yes",
+        "isExistingRetailer": "Yes"
+      },
+      "personalDetails": {
+        "title": "Mrs.",
+        "firstName": "asdfg",
+        "middleName": "",
+        "lastName": "werty",
+        "email": "asd@gmail.com",
+        "dateOfBirth": "2025-08-08",
+        "cellphone": "1234567890",
+        "businessPhone": "",
+        "homePhone": "",
+        "gender": "Female",
+        "addCoApplicant": "Yes"
+      },
+      "businessInformation": {
+        "businessName": "erty",
+        "typeOfBusiness": "Service",
+        "country": "Canada",
+        "parish": "St. Andrew",
+        "town": "",
+        "district": "",
+        "postalCode": "",
+        "address": "erghb ",
+        "doYouOwnBusiness": "No",
+        "yearsInOperation": 6,
+        "ownOrRentLocation": "Rent"
+      },
+      "fileUpload": ""
+    },
+    {
+      "id": "e390",
+      "product": [
+        "lottery"
+      ],
+      "applicationSource": "Website",
+      "residentInfo": {
+        "isResidentJamaica": "Yes",
+        "isExistingRetailer": "Yes"
+      },
+      "personalDetails": {
+        "title": "Mrs.",
+        "firstName": "asdf",
+        "middleName": "",
+        "lastName": "dfgh",
+        "email": "abc@gmail.com",
+        "dateOfBirth": "2025-08-13",
+        "cellphone": "1234567890",
+        "businessPhone": "",
+        "homePhone": "",
+        "gender": "Male",
+        "addCoApplicant": "Yes"
+      },
+      "businessInformation": {
+        "businessName": "rtghj",
+        "typeOfBusiness": "Service",
+        "country": "United States",
+        "parish": "St. Andrew",
+        "town": "",
+        "district": "",
+        "postalCode": "",
+        "address": "jbvx",
+        "doYouOwnBusiness": "Yes",
+        "yearsInOperation": 8,
+        "ownOrRentLocation": "Own"
+      },
+      "fileUpload": "C:\\fakepath\\image (2).png"
+    }
+  ]
+}
