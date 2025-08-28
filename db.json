@@ -304,6 +304,196 @@
         "ownOrRentLocation": "Own"
       },
       "fileUpload": "C:\\fakepath\\image (2).png"
+    },
+    {
+      "id": "54cc",
+      "product": [
+        "lottery"
+      ],
+      "applicationSource": "In-Person",
+      "residentInfo": {
+        "isResidentJamaica": "Yes",
+        "isExistingRetailer": "Yes"
+      },
+      "personalDetails": {
+        "title": "Ms.",
+        "firstName": "Harshita",
+        "middleName": "",
+        "lastName": "bansal",
+        "email": "harshitabansal3142@gmail.com",
+        "dateOfBirth": "2025-08-09",
+        "cellphone": "07986037921",
+        "businessPhone": "",
+        "homePhone": "",
+        "gender": "Female",
+        "addCoApplicant": "No"
+      },
+      "businessInformation": {
+        "businessName": "qwertyu",
+        "typeOfBusiness": "Manufacturing",
+        "country": "Canada",
+        "parish": "Trelawny",
+        "town": "Chandigarh",
+        "district": "",
+        "postalCode": "160019",
+        "address": "#3142\nSector -27 D",
+        "doYouOwnBusiness": "No",
+        "yearsInOperation": 6,
+        "ownOrRentLocation": "Rent"
+      },
+      "fileUpload": ""
+    },
+    {
+      "id": "4376",
+      "product": [
+        "casino"
+      ],
+      "applicationSource": "Referral",
+      "residentInfo": {
+        "isResidentJamaica": "No",
+        "isExistingRetailer": "No"
+      },
+      "personalDetails": {
+        "title": "Dr.",
+        "firstName": "poiuyt",
+        "middleName": "",
+        "lastName": "rtyuk",
+        "email": "harshitabansal3142@gmail.com",
+        "dateOfBirth": "2025-08-02",
+        "cellphone": "1234567890",
+        "businessPhone": "",
+        "homePhone": "",
+        "gender": "Female",
+        "addCoApplicant": "No"
+      },
+      "businessInformation": {
+        "businessName": "mdncb",
+        "typeOfBusiness": "Manufacturing",
+        "country": "United States",
+        "parish": "St. Catherine",
+        "town": "Chandigarh",
+        "district": "",
+        "postalCode": "160019",
+        "address": "#3142\nSector -27 D",
+        "doYouOwnBusiness": "No",
+        "yearsInOperation": 1,
+        "ownOrRentLocation": "Rent"
+      },
+      "fileUpload": ""
+    },
+    {
+      "id": "7108",
+      "product": [
+        "sports"
+      ],
+      "applicationSource": "Website",
+      "residentInfo": {
+        "isResidentJamaica": "No",
+        "isExistingRetailer": "No"
+      },
+      "personalDetails": {
+        "title": "Dr.",
+        "firstName": "adi",
+        "middleName": "",
+        "lastName": "chawla",
+        "email": "adi@gmail.com",
+        "dateOfBirth": "2018-06-13",
+        "cellphone": "7896321457",
+        "businessPhone": "",
+        "homePhone": "",
+        "gender": "Male",
+        "addCoApplicant": "Yes"
+      },
+      "businessInformation": {
+        "businessName": "adi business",
+        "typeOfBusiness": "Retail",
+        "country": "United States",
+        "parish": "Trelawny",
+        "town": "",
+        "district": "",
+        "postalCode": "",
+        "address": "28,rani bagh",
+        "doYouOwnBusiness": "Yes",
+        "yearsInOperation": 9,
+        "ownOrRentLocation": "Own"
+      },
+      "fileUpload": ""
+    },
+    {
+      "id": "45ca",
+      "product": [
+        "otb"
+      ],
+      "applicationSource": "In-Person",
+      "residentInfo": {
+        "isResidentJamaica": "Yes",
+        "isExistingRetailer": "Yes"
+      },
+      "personalDetails": {
+        "title": "Mrs.",
+        "firstName": "ram",
+        "middleName": "",
+        "lastName": "singh",
+        "email": "ram@gmail.com",
+        "dateOfBirth": "2025-08-15",
+        "cellphone": "9530665544",
+        "businessPhone": "",
+        "homePhone": "",
+        "gender": "Male",
+        "addCoApplicant": "Yes"
+      },
+      "businessInformation": {
+        "businessName": "ram business",
+        "typeOfBusiness": "Manufacturing",
+        "country": "Jamaica",
+        "parish": "Kingston",
+        "town": "",
+        "district": "",
+        "postalCode": "",
+        "address": "31 , 27 D",
+        "doYouOwnBusiness": "Yes",
+        "yearsInOperation": 10,
+        "ownOrRentLocation": "Own"
+      },
+      "fileUpload": ""
+    },
+    {
+      "id": "ce8e",
+      "product": [
+        "otb"
+      ],
+      "applicationSource": "Referral",
+      "residentInfo": {
+        "isResidentJamaica": "Yes",
+        "isExistingRetailer": "Yes"
+      },
+      "personalDetails": {
+        "title": "Dr.",
+        "firstName": "qwertyu",
+        "middleName": "",
+        "lastName": "poiuyt",
+        "email": "ram@gmail",
+        "dateOfBirth": "2025-08-08",
+        "cellphone": "1234567890",
+        "businessPhone": "",
+        "homePhone": "",
+        "gender": "Male",
+        "addCoApplicant": "Yes"
+      },
+      "businessInformation": {
+        "businessName": "ram ",
+        "typeOfBusiness": "Service",
+        "country": "Jamaica",
+        "parish": "St. Andrew",
+        "town": "",
+        "district": "",
+        "postalCode": "",
+        "address": "1234",
+        "doYouOwnBusiness": "Yes",
+        "yearsInOperation": 6,
+        "ownOrRentLocation": "Own"
+      },
+      "fileUpload": "C:\\fakepath\\image (2).png"
     }
   ]
 }

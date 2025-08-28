@@ -92,35 +92,32 @@ export class Form implements OnInit {
     this.isModalVisible = false;
   }
 
-  // ✅ Updated onSubmit with API call
   onSubmit(): void {
-  if (this.applicationForm.valid) {
-    const rawData = this.applicationForm.value;
+    if (this.applicationForm.valid) {
+      const rawData = this.applicationForm.value;
 
-    // ✅ Convert boolean array to product names
-    const productOptions = ['lottery', 'casino', 'sports'];
-    rawData.product = rawData.product
-      ?.map((checked: boolean, i: number) => (checked ? productOptions[i] : null))
-      .filter((v: string | null) => v !== null);
+      // ✅ Convert boolean array to product names
+      const productValues = this.productOptions.map(opt => opt.value);
+      rawData.product = rawData.product
+        ?.map((checked: boolean, i: number) => (checked ? productValues[i] : null))
+        .filter((v: string | null) => v !== null);
 
-    // Save via service
-    this.appService.addApplication(rawData).subscribe({
-      next: (res) => {
-        console.log('Application saved:', res);
-        alert('Application submitted successfully!');
-        this.closeModal();
-      },
-      error: (err) => {
-        console.error('Error saving application', err);
-        alert('Failed to submit application.');
-      }
-    });
-  } else {
-    console.log('Form is invalid. Please correct the errors.');
-    this.markFormGroupTouched(this.applicationForm); // ✅ kept from old code
+      this.appService.addApplication(rawData).subscribe({
+        next: (res) => {
+          console.log('Application saved:', res);
+          alert('Application submitted successfully!');
+          this.closeModal();
+        },
+        error: (err: any) => {   // <-- explicitly typed
+          console.error('Error saving application', err);
+          alert('Failed to submit application.');
+        }
+      });
+    } else {
+      console.log('Form is invalid. Please correct the errors.');
+      this.markFormGroupTouched(this.applicationForm);
+    }
   }
-}
-
 
   private addCheckboxes(): void {
     this.productOptions.forEach(() => (this.applicationForm.get('product') as FormArray).push(this.fb.control(false)));

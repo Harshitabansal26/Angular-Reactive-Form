@@ -5,6 +5,16 @@
   </button>
 
   <h2>Submitted Applications</h2>
+  <!-- Search Section -->
+  <div class="search-container mb-3 d-flex gap-2 flex-wrap">
+    <input type="text" placeholder="Business Name" [(ngModel)]="searchFields.businessName" class="form-control" />
+    <input type="text" placeholder="Email" [(ngModel)]="searchFields.email" class="form-control" />
+    <input type="text" placeholder="Mobile" [(ngModel)]="searchFields.mobile" class="form-control" />
+    <input type="text" placeholder="Parish" [(ngModel)]="searchFields.parish" class="form-control" />
+
+    <button class="btn btn-success" (click)="onSearch()">Search</button>
+    <button class="btn btn-secondary" (click)="onReset()">Reset</button>
+  </div>
 
   <table class="table">
     <thead>
