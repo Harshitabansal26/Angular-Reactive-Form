@@ -1,65 +1,48 @@
-<div class="home-container">
-  <h1>Welcome!</h1>
-  <button class="btn btn-primary mb-3" [routerLink]="['/form']">
-    Go to Application Form
-  </button>
+<div class="container mt-4">
+  <h1>Applications</h1>
 
-  <h2>Submitted Applications</h2>
-  <!-- Search Section -->
-  <div class="search-container mb-3 d-flex gap-2 flex-wrap">
-    <input type="text" placeholder="Business Name" [(ngModel)]="searchFields.businessName" class="form-control" />
-    <input type="text" placeholder="Email" [(ngModel)]="searchFields.email" class="form-control" />
-    <input type="text" placeholder="Mobile" [(ngModel)]="searchFields.mobile" class="form-control" />
-    <input type="text" placeholder="Parish" [(ngModel)]="searchFields.parish" class="form-control" />
-
-    <button class="btn btn-success" (click)="onSearch()">Search</button>
-    <button class="btn btn-secondary" (click)="onReset()">Reset</button>
+  <!-- 🔍 Search Filters -->
+  <div class="row mb-3">
+    <div class="col-md-2">
+      <input class="form-control" [(ngModel)]="searchFields.applicationId" placeholder="Application ID" />
+    </div>
+    <div class="col-md-3">
+      <input class="form-control" [(ngModel)]="searchFields.businessName" placeholder="Business Name" />
+    </div>
+    <div class="col-md-3">
+      <input class="form-control" [(ngModel)]="searchFields.email" placeholder="Email" />
+    </div>
+    <div class="col-md-2">
+      <input class="form-control" [(ngModel)]="searchFields.mobile" placeholder="Mobile" />
+    </div>
+    <div class="col-md-2 d-flex gap-2">
+      <button class="btn btn-primary w-100" (click)="searchApplications()">Search</button>
+      <button class="btn btn-success w-100" [routerLink]="['/form']">+ Add Application</button>
+    </div>
   </div>
 
-  <table class="table">
-    <thead>
+  <!-- 📋 Applications Table -->
+  <table class="table table-bordered table-hover">
+    <thead class="table-dark">
       <tr>
-        <th>S. No</th>
-        <th>Product</th>
-        <th>Application Source</th>
-        <th>Title</th>
-        <th>Full Name</th>
-        <th>Email</th>
-        <th>DOB</th>
-        <th>Cellphone</th>
-        <th>Gender</th>
+        <th>Application ID</th>
         <th>Business Name</th>
-        <th>Type of Business</th>
-        <th>Country</th>
+        <th>Email</th>
+        <th>Mobile</th>
         <th>Parish</th>
-        <th>Address</th>
-        <th>Years in Operation</th>
+        <th>Application Source</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let app of applications; let i = index">
-        <td>{{ i + 1 }}</td>
-        <td>{{ app.product?.join(', ') }}</td>
-        <td>{{ app.applicationSource }}</td>
-        <td>{{ app.personalDetails?.title }}</td>
-        <td>
-          {{ app.personalDetails?.firstName }} 
-          {{ app.personalDetails?.middleName }} 
-          {{ app.personalDetails?.lastName }}
-        </td>
-        <td>{{ app.personalDetails?.email }}</td>
-        <td>{{ app.personalDetails?.dateOfBirth }}</td>
-        <td>{{ app.personalDetails?.cellphone }}</td>
-        <td>{{ app.personalDetails?.gender }}</td>
-        <td>{{ app.businessInformation?.businessName }}</td>
-        <td>{{ app.businessInformation?.typeOfBusiness }}</td>
-        <td>{{ app.businessInformation?.country }}</td>
-        <td>{{ app.businessInformation?.parish }}</td>
-        <td>{{ app.businessInformation?.address }}</td>
-        <td>{{ app.businessInformation?.yearsInOperation }}</td>
-      </tr>
+      <tr *ngFor="let app of applications">
+  <td>{{ app.applicationId }}</td>
+  <td>{{ app.businessName }}</td>
+  <td>{{ app.email }}</td>
+  <td>{{ app.cellPhone }}</td>
+  <td>{{ app.parish }}</td>
+  <td>{{ app.applicationReceivedFrom }}</td>
+</tr>
+
     </tbody>
   </table>
-<ng-template #noData>
-  <p>No applications submitted yet.</p>
-</ng-template>
+</div>

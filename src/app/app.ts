@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { Application } from './application';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,10 @@ import { RouterOutlet } from '@angular/router';
   imports: [RouterOutlet], 
   template:  `<router-outlet></router-outlet>` 
 })
-export class App { }
+export class App implements OnInit {
+  constructor(private appService: Application) {}
+
+  ngOnInit() {
+    
+  }
+}

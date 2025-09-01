@@ -4,6 +4,6 @@ import { Form } from './form/form';
 import { Home } from './home/home';
 
 export const routes: Routes = [
-  { path: '', component: Home },   // default page
+  { path: '', component: Home},   // default page
   { path: 'form', component: Form }    // your form page
 ];

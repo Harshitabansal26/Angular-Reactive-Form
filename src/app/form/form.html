@@ -1,17 +1,15 @@
-<!-- src/app/form/form.html -->
-<!-- This file now includes the confirmation modal structure. -->
 <div class="form-container">
   <form [formGroup]="applicationForm" (ngSubmit)="onSubmit()">
     <h1>Business Onboarding: Add New Application</h1>
 
-    <!-- SECTION: Product -->
+    <!-- Product Section -->
     <div class="form-section">
       <h2>Section: Product</h2>
       <div class="form-group required">
         <label>Product or service applying for</label>
         <div class="checkbox-group" formArrayName="product">
-          <div *ngFor="let option of productOptions; let i = index">
-            <input type="checkbox" [formControlName]="i" [id]="option.value">
+          <div *ngFor="let option of productOptions; let i = index" class="checkbox-item">
+            <input type="checkbox" [formControlName]="i" [id]="option.value" />
             <label [for]="option.value">{{ option.name }}</label>
           </div>
         </div>
@@ -21,14 +19,16 @@
       </div>
     </div>
 
-    <!-- SECTION: Application Source -->
+    <!-- Application Source -->
     <div class="form-section">
       <h2>Section: Application Source</h2>
       <div class="form-group required">
         <label for="applicationSource">Application Received From</label>
         <select id="applicationSource" formControlName="applicationSource">
           <option value="">Select...</option>
-          <option *ngFor="let source of applicationSources" [value]="source">{{ source }}</option>
+          <option *ngFor="let source of lookupData.applicationReceiveFrom" [value]="source.key">
+            {{ source.value }}
+          </option>
         </select>
         <div *ngIf="applicationForm.get('applicationSource')?.invalid && applicationForm.get('applicationSource')?.touched" class="error-message">
           This field is required.
@@ -36,261 +36,213 @@
       </div>
     </div>
 
-    <!-- SECTION: Resident & Retailer -->
-    <div class="form-section" formGroupName="residentInfo">
-      <h2>Section: Resident & Retailer</h2>
-      <div class="form-group required">
-        <label>Are you a resident of Jamaica?</label>
-        <div class="radio-group">
-          <input type="radio" id="resident-yes" value="Yes" formControlName="isResidentJamaica">
-          <label for="resident-yes">Yes</label>
-          <input type="radio" id="resident-no" value="No" formControlName="isResidentJamaica">
-          <label for="resident-no">No</label>
-        </div>
-        <div *ngIf="residentInfo.get('isResidentJamaica')?.invalid && residentInfo.get('isResidentJamaica')?.touched" class="error-message">
-          This field is required.
-        </div>
-      </div>
-      <div class="form-group required">
-        <label>Are you an existing retailer?</label>
-        <div class="radio-group">
-          <input type="radio" id="retailer-yes" value="Yes" formControlName="isExistingRetailer">
-          <label for="retailer-yes">Yes</label>
-          <input type="radio" id="retailer-no" value="No" formControlName="isExistingRetailer">
-          <label for="retailer-no">No</label>
-        </div>
-        <div *ngIf="residentInfo.get('isExistingRetailer')?.invalid && residentInfo.get('isExistingRetailer')?.touched" class="error-message">
-          This field is required.
-        </div>
-      </div>
-    </div>
-
-    <!-- SECTION: Personal Details -->
+    <!-- Personal Details -->
     <div class="form-section" formGroupName="personalDetails">
       <h2>Section: Personal Details</h2>
+
       <div class="form-group required">
         <label for="title">Title</label>
         <select id="title" formControlName="title">
           <option value="">Select...</option>
-          <option *ngFor="let title of titles" [value]="title">{{ title }}</option>
+          <option *ngFor="let t of lookupData.title" [value]="t.key">{{ t.value }}</option>
         </select>
-        <div *ngIf="personalDetails.get('title')?.invalid && personalDetails.get('title')?.touched" class="error-message">
-          This field is required.
-        </div>
       </div>
-      <div class="form-row">
-        <div class="form-group required">
-          <label for="firstName">First Name</label>
-          <input type="text" id="firstName" formControlName="firstName">
-          <div *ngIf="personalDetails.get('firstName')?.invalid && personalDetails.get('firstName')?.touched" class="error-message">
-            This field is required.
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="middleName">Middle Name</label>
-          <input type="text" id="middleName" formControlName="middleName">
-        </div>
-        <div class="form-group required">
-          <label for="lastName">Last Name</label>
-          <input type="text" id="lastName" formControlName="lastName">
-          <div *ngIf="personalDetails.get('lastName')?.invalid && personalDetails.get('lastName')?.touched" class="error-message">
-            This field is required.
-          </div>
-        </div>
+
+      <div class="form-group required">
+        <label for="firstName">First Name</label>
+        <input id="firstName" type="text" formControlName="firstName" />
       </div>
+
+      <div class="form-group">
+        <label for="middleName">Middle Name</label>
+        <input id="middleName" type="text" formControlName="middleName" />
+      </div>
+
+      <div class="form-group required">
+        <label for="lastName">Last Name</label>
+        <input id="lastName" type="text" formControlName="lastName" />
+      </div>
+
       <div class="form-group required">
         <label for="email">Email</label>
-        <input type="email" id="email" formControlName="email">
-        <div *ngIf="personalDetails.get('email')?.invalid && personalDetails.get('email')?.touched" class="error-message">
-          <span *ngIf="personalDetails.get('email')?.errors?.['required']">This field is required.</span>
-          <span *ngIf="personalDetails.get('email')?.errors?.['email']">Please enter a valid email.</span>
-        </div>
+        <input id="email" type="email" formControlName="email" />
       </div>
+
       <div class="form-group required">
         <label for="dateOfBirth">Date of Birth</label>
-        <input type="date" id="dateOfBirth" formControlName="dateOfBirth">
-        <div *ngIf="personalDetails.get('dateOfBirth')?.invalid && personalDetails.get('dateOfBirth')?.touched" class="error-message">
-          This field is required.
-        </div>
+        <input id="dateOfBirth" type="date" formControlName="dateOfBirth" />
       </div>
-      <div class="form-row">
-        <div class="form-group required">
-          <label for="cellphone">Cellphone</label>
-          <input type="tel" id="cellphone" formControlName="cellphone">
-          <div *ngIf="personalDetails.get('cellphone')?.invalid && personalDetails.get('cellphone')?.touched" class="error-message">
-            This field is required.
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="businessPhone">Business Phone</label>
-          <input type="tel" id="businessPhone" formControlName="businessPhone">
-        </div>
-        <div class="form-group">
-          <label for="homePhone">Home Phone</label>
-          <input type="tel" id="homePhone" formControlName="homePhone">
-        </div>
+
+      <div class="form-group required">
+        <label for="cellphone">Cellphone</label>
+        <input id="cellphone" type="tel" formControlName="cellphone" />
       </div>
+
+      <div class="form-group">
+        <label for="businessPhone">Business Phone</label>
+        <input id="businessPhone" type="tel" formControlName="businessPhone" />
+      </div>
+
+      <div class="form-group">
+        <label for="homePhone">Home Phone</label>
+        <input id="homePhone" type="tel" formControlName="homePhone" />
+      </div>
+
       <div class="form-group required">
         <label>Gender</label>
         <div class="radio-group">
-          <input type="radio" id="gender-male" value="Male" formControlName="gender">
+          <input type="radio" id="gender-male" value="MALE" formControlName="gender" />
           <label for="gender-male">Male</label>
-          <input type="radio" id="gender-female" value="Female" formControlName="gender">
+          <input type="radio" id="gender-female" value="FEMALE" formControlName="gender" />
           <label for="gender-female">Female</label>
         </div>
-        <div *ngIf="personalDetails.get('gender')?.invalid && personalDetails.get('gender')?.touched" class="error-message">
-          This field is required.
-        </div>
       </div>
+
       <div class="form-group required">
-        <label>Add co-applicant</label>
-        <div class="radio-group">
-          <input type="radio" id="coApplicant-yes" value="Yes" formControlName="addCoApplicant">
-          <label for="coApplicant-yes">Yes</label>
-          <input type="radio" id="coApplicant-no" value="No" formControlName="addCoApplicant">
-          <label for="coApplicant-no">No</label>
-        </div>
-        <div *ngIf="personalDetails.get('addCoApplicant')?.invalid && personalDetails.get('addCoApplicant')?.touched" class="error-message">
-          This field is required.
-        </div>
+        <label>Are you a Jamaica Resident?</label>
+        <select formControlName="isJamaicaResident">
+          <option value="">Select...</option>
+          <option value="YES">Yes</option>
+          <option value="NO">No</option>
+        </select>
+      </div>
+
+      <div class="form-group required">
+        <label>Existing Retailer?</label>
+        <select formControlName="existingRetailer">
+          <option value="">Select...</option>
+          <option value="YES">Yes</option>
+          <option value="NO">No</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+  <label for="retailerId">Retailer ID</label>
+  <input id="retailerId" type="text" formControlName="retailerId" />
+</div>
+
+<div class="form-group">
+  <label for="otherCreationReason">Other Creation Reason</label>
+  <input id="otherCreationReason" type="text" formControlName="otherCreationReason" />
+</div>
+
+
+      <div class="form-group required">
+        <label for="addCoApplicant">Add Co-Applicant?</label>
+        <select id="addCoApplicant" formControlName="addCoApplicant">
+          <option value="">Select...</option>
+          <option value="YES">Yes</option>
+          <option value="NO">No</option>
+        </select>
       </div>
     </div>
 
-    <!-- SECTION: Business Information -->
+    <!-- Business Information -->
     <div class="form-section" formGroupName="businessInformation">
       <h2>Section: Business Information</h2>
-      <div class="form-row">
-        <div class="form-group required">
-          <label for="businessName">Business Name</label>
-          <input type="text" id="businessName" formControlName="businessName">
-          <div *ngIf="businessInformation.get('businessName')?.invalid && businessInformation.get('businessName')?.touched" class="error-message">
-            This field is required.
-          </div>
-        </div>
-        <div class="form-group required">
-          <label for="typeOfBusiness">Type of Business</label>
-          <select id="typeOfBusiness" formControlName="typeOfBusiness">
-            <option value="">Select...</option>
-            <option *ngFor="let type of businessTypes" [value]="type">{{ type }}</option>
-          </select>
-          <div *ngIf="businessInformation.get('typeOfBusiness')?.invalid && businessInformation.get('typeOfBusiness')?.touched" class="error-message">
-            This field is required.
-          </div>
-        </div>
+
+      <div class="form-group required">
+        <label for="businessName">Business Name</label>
+        <input id="businessName" type="text" formControlName="businessName" />
       </div>
-      <div class="form-row">
-        <div class="form-group required">
-          <label for="country">Country</label>
-          <select id="country" formControlName="country">
-            <option value="">Select...</option>
-            <option *ngFor="let country of countries" [value]="country">{{ country }}</option>
-          </select>
-          <div *ngIf="businessInformation.get('country')?.invalid && businessInformation.get('country')?.touched" class="error-message">
-            This field is required.
-          </div>
-        </div>
-        <div class="form-group required">
-          <label for="parish">Parish</label>
-          <select id="parish" formControlName="parish">
-            <option value="">Select...</option>
-            <option *ngFor="let parish of parishes" [value]="parish">{{ parish }}</option>
-          </select>
-          <div *ngIf="businessInformation.get('parish')?.invalid && businessInformation.get('parish')?.touched" class="error-message">
-            This field is required.
-          </div>
-        </div>
+
+      <div class="form-group required">
+        <label for="country">Country</label>
+        <select id="country" formControlName="country">
+          <option value="">Select...</option>
+          <option *ngFor="let c of lookupData.countryCode" [value]="c.key">{{ c.value }}</option>
+        </select>
       </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label for="town">Town</label>
-          <input type="text" id="town" formControlName="town">
-        </div>
-        <div class="form-group">
-          <label for="district">District</label>
-          <input type="text" id="district" formControlName="district">
-        </div>
-        <div class="form-group">
-          <label for="postalCode">Postal Code</label>
-          <input type="text" id="postalCode" formControlName="postalCode">
-        </div>
+
+      <div class="form-group required">
+        <label for="parish">Parish</label>
+        <select id="parish" formControlName="parish">
+          <option value="">Select...</option>
+          <option *ngFor="let p of lookupData.parishCounty" [value]="p.key">{{ p.key }} ({{ p.value }})</option>
+        </select>
       </div>
+
+      <div class="form-group">
+        <label for="town">Town</label>
+        <input id="town" type="text" formControlName="town" />
+      </div>
+
+      <div class="form-group">
+        <label for="district">District</label>
+        <input id="district" type="text" formControlName="district" />
+      </div>
+
+      <div class="form-group">
+        <label for="postalCode">Postal Code</label>
+        <input id="postalCode" type="text" formControlName="postalCode" />
+      </div>
+
       <div class="form-group required">
         <label for="address">Address</label>
         <textarea id="address" formControlName="address"></textarea>
-        <div *ngIf="businessInformation.get('address')?.invalid && businessInformation.get('address')?.touched" class="error-message">
-          This field is required.
-        </div>
       </div>
+
       <div class="form-group required">
-        <label>Do you own the business?</label>
-        <div class="radio-group">
-          <input type="radio" id="ownBusiness-yes" value="Yes" formControlName="doYouOwnBusiness">
-          <label for="ownBusiness-yes">Yes</label>
-          <input type="radio" id="ownBusiness-no" value="No" formControlName="doYouOwnBusiness">
-          <label for="ownBusiness-no">No</label>
-        </div>
-        <div *ngIf="businessInformation.get('doYouOwnBusiness')?.invalid && businessInformation.get('doYouOwnBusiness')?.touched" class="error-message">
-          This field is required.
-        </div>
+        <label for="doYouOwnBusiness">Do you own the business?</label>
+        <select id="doYouOwnBusiness" formControlName="doYouOwnBusiness">
+          <option value="">Select...</option>
+          <option value="YES">Yes</option>
+          <option value="NO">No</option>
+        </select>
       </div>
+
       <div class="form-group required">
         <label for="yearsInOperation">Years in Operation</label>
-        <input type="number" id="yearsInOperation" formControlName="yearsInOperation">
-        <div *ngIf="businessInformation.get('yearsInOperation')?.invalid && businessInformation.get('yearsInOperation')?.touched" class="error-message">
-          This field is required.
-        </div>
+        <input id="yearsInOperation" type="number" formControlName="yearsInOperation" min="0" />
       </div>
       <div class="form-group required">
-        <label>Do you own or rent the location?</label>
-        <div class="radio-group">
-          <input type="radio" id="location-own" value="Own" formControlName="ownOrRentLocation">
-          <label for="location-own">Own</label>
-          <input type="radio" id="location-rent" value="Rent" formControlName="ownOrRentLocation">
-          <label for="location-rent">Rent</label>
-        </div>
-        <div *ngIf="businessInformation.get('ownOrRentLocation')?.invalid && businessInformation.get('ownOrRentLocation')?.touched" class="error-message">
-          This field is required.
-        </div>
+  <label for="monthsInOperation">Months in Operation</label>
+  <input id="monthsInOperation" type="number" formControlName="monthsInOperation" min="0" />
+  <div *ngIf="businessInformation.get('monthsInOperation')?.invalid && businessInformation.get('monthsInOperation')?.touched" class="error-message">
+    This field is required.
+  </div>
+</div>
+
+
+      <div class="form-group required">
+        <label for="ownOrRentLocation">Own or Rent Location</label>
+        <select id="ownOrRentLocation" formControlName="ownOrRentLocation">
+          <option value="">Select...</option>
+          <option value="OWN">Own</option>
+          <option value="RENT">Rent</option>
+        </select>
       </div>
     </div>
 
-    <!-- SECTION: File Upload -->
+    <!-- File Upload -->
     <div class="form-section">
       <h2>Section: File Upload</h2>
-      <div class="file-upload-box" 
-        (dragover)="onDragOver($event)" 
-        (dragleave)="onDragLeave($event)" 
+      <div
+        class="file-upload-box"
+        (dragover)="onDragOver($event)"
+        (dragleave)="onDragLeave($event)"
         (drop)="onDrop($event)"
         (click)="fileInput.click()"
-        #fileDropZone>
-        <p>Drag and Drop to upload a file or <a href="#" onclick="return false;">Browse</a></p>
-        <small>NOTE: Supports maximum of 10 files with 10MB each. Supported formats: jpg, png, pdf, docx.</small>
+        #fileDropZone
+      >
+        <p>Drag and Drop to upload a file or <a href="#" (click)="$event.preventDefault()">Browse</a></p>
+        <small>Supports max 1 file, 10MB. Formats: jpg, png, pdf, docx.</small>
       </div>
-      <!-- File input is hidden; triggered by the "Browse" link -->
-      <input type="file" 
-        id="uploadDocuments" 
-        formControlName="fileUpload" 
-        (change)="onFileSelected($event)" 
-        multiple 
-        #fileInput
-        style="display: none;">
+      <input type="file" id="uploadDocuments" (change)="onFileSelected($event)" #fileInput style="display: none;" />
       <div class="file-list">
-        <div *ngFor="let file of uploadedFiles" class="file-item">
-          {{ file.name }}
-        </div>
+        <div *ngFor="let file of uploadedFiles" class="file-item">{{ file.name }}</div>
       </div>
     </div>
 
-    <!-- Form Buttons -->
+    <!-- Buttons -->
     <div class="button-group">
-      <button type="button" class="btn btn-cancel">Cancel</button>
-      <!-- Change the type to 'button' and call a new method to open the modal -->
-      <button type="button" class="btn btn-create" (click)="openModal()" >Create</button>
+      <button type="button" class="btn btn-cancel" (click)="applicationForm.reset()">Cancel</button>
+      <button type="button" class="btn btn-create" (click)="openModal()">Create</button>
     </div>
   </form>
 </div>
 
-<!-- Confirmation Modal -->
+<!-- Modal -->
 <div class="modal-overlay" *ngIf="isModalVisible">
   <div class="modal-content">
     <div class="modal-header">

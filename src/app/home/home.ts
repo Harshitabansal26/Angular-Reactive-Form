@@ -1,53 +1,45 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Application } from '../application'; 
-import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms'; // For ngModel
+import { FormsModule } from '@angular/forms';   
+import { Application } from '../application';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink], 
   templateUrl: './home.html',
   styleUrls: ['./home.css']
 })
 export class Home implements OnInit {
   applications: any[] = [];
 
-  // Search fields
-  searchFields: any = {
+  searchFields = {
+    applicationId: '',
     businessName: '',
     email: '',
-    mobile: '',
-    parish: ''
+    mobile: ''
   };
 
-  constructor(private appService: Application) {} 
+  constructor(private appService: Application) {}
 
   ngOnInit(): void {
     this.loadApplications();
   }
 
-loadApplications(filters: any = {}) {
-  this.appService.getApplications(filters).subscribe({
-    next: (data) => (this.applications = data),
-    error: (err) => console.error('Error fetching applications', err)
-  });
+   loadApplications(): void {
+    this.appService.getApplications(this.searchFields).subscribe({
+      next: (res: any) => {
+    this.applications = res?.result?.data || [];
 }
+,
+      error: (err) => {
+        console.error('Error fetching applications:', err);
+      }
+    });
+  }
 
-// Trigger search
-onSearch() {
-  this.loadApplications(this.searchFields);
-}
-
-// Reset
-onReset() {
-  this.searchFields = {
-    businessName: '',
-    email: '',
-    mobile: '',
-    parish: ''
-  };
-  this.loadApplications();
-}
+  searchApplications(): void {
+    this.loadApplications();
+  }
 }
