@@ -1,4 +1,3 @@
-// src/app/application.ts
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -10,7 +9,7 @@ import { environment } from '../environments/environment';
 export class Application {
   private baseUrl = environment.apiBaseUrl;
 
-  private authToken: string = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI1IiwianRpIjoiYjJlMmY1N2EwMjcwNDExY2Y5MTc0ZmQ2MzMxNzBkMDhlMjhkNjkxZDc4NzUxY2NmMDhjZTFkMWY0NmU0MDcyN2JlNDYwMmNkYmY2OWQ1ZjkiLCJpYXQiOjE3NTY3MTMwNjguODg0ODg4LCJuYmYiOjE3NTY3MTMwNjguODg0ODkyLCJleHAiOjE3ODgyNDkwNjguODc3MzM2LCJzdWIiOiI0Iiwic2NvcGVzIjpbImFkbWluIl19.ZrTUTGq4buFGuVN9dg8Le8sMPfAQbU9lqkBq3hS-1HdUlbGJENLp7WTAjDUbBs1oAySFo0hKBO8GlgpSzRBwJNg0CZy1OYTNzHeuf2vEucpXltFUj1d_SIb8bMMyf9klATM-9AhyCyP7PIwqbR-ZOISYgSco8sA0NZQ7HGhocLdMElcHkXHZJYS9SfM6Iqv5pL576OYkmy1Lty_x68epSvDI-iy-O6YnWrTsW8PQIvbfPO23xkfmSdrwR7NcxSo5mVPbun-KnGDdCguHCw8rN_hBlwsjAneR407Hqc_N3j2SITX5Zn2fBSLqbb8dZbiK4mEbSn_EVqsiWqAxR_mkjdFepHtNSIThM2xLYQ2I0skWZhnVFJiMpi2OhBzlRXDMo_yMOwliuUiG5CC4CKGRENvAz7-yWUb6wFQTeNNhX-8qe4eW_KyjosuczRTI8pZY2_lqWcRn1i0GGikfDnx3SbZKt_ysg9UacVFR5HgRhSO4nV_m3uB47ks0CcZqIvwcQhi5iU8t5EopcfmB_L4ArPuvX_W1kfCHlvNzGYK-rbZxlPQxgecq_EpPGeM8Y6FOt8pR0pxdV40TEq2HEXJieJbl-s6bs7Xkwc8Wzl0HwVA6tTPMQkO_gn-o4r5cPe6NfPW7dohC6k4CV4VT54evuB_wCWx-jZt4q97zaPxjNEw'; 
+  private authToken: string = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI1IiwianRpIjoiNzEwNjk1YzliNzI2ZWFhZTIxMmRmZjUyNTQ1ZjZlNjlhOGI3MzE2NzlmNjBhYmJhYzFiYjc4MWQ5ZDIxZGNiNzY5OTBhMGVlMmMwMjRiNjciLCJpYXQiOjE3NTY4ODE0MDUuNTkyMTk4LCJuYmYiOjE3NTY4ODE0MDUuNTkyMjAzLCJleHAiOjE3ODg0MTc0MDUuNTMyMzQ4LCJzdWIiOiI0Iiwic2NvcGVzIjpbImFkbWluIl19.I0EF8Zq2fEacxtbP-7faYrQyAGpIDNodnVyVSSXyOf1-FI09-FZZ4Mo_dgfc7aZLSoiBhisdzjfG9yKVN3Lftcg7l-HmhUE4j5Egl3SSbfywaW8bG7jeG2UgFD9WX2CuUXvHVHBKFp3FNjAB8SuSaNydLkcbp0eZc5XYgfdeEjgRsoaJuK0KaH3TODxtcMzyt8hIvPrKbIYAn7oYFuLJyE4JYcv0zOzww7aoyv15JoX6RpN3xJdO29wAbedIv6rI0iiyj2WYV32vdVm5ZdWb4CvRK4P20ay0Aw01bgQGUoPfnjPD6ekNvmrc2vq-bpqxHZDgjH361sXEo8lwxpfopHGcVHlNrQPOYR2sqdnv-17maj8L0T2uIklTLOOhsmy94oYIKMiezNqAdipGAZ51JlfRNowmsAEycfY41Wf5WcluRLc5M285bMSMY16G-mP85M4s2r3avhVzdwZRO7qkyj2C9COZVQt_peagYElH62SVglORZjwe0BqFveQ45ca2a8HFrg9B3f5AGCjaqo84fSHyN8Z9WwBlIzxs6UywNX06T5_P_sabSFVGFWANtLQFW5SsjcGXWmtqyusoXCPKRdOtnJd68d_FmfzEHCySHwMLabrsyT4LbdwaErqbzWEvv4WluDYDko6KRG_p-4-tQEtyVr3NQrIR35UaUf3Jt2A';
 
   constructor(private http: HttpClient) {}
 
@@ -66,8 +65,9 @@ export class Application {
     if (filters.applicationId) params = params.set('applicationId', filters.applicationId);
     if (filters.businessName) params = params.set('businessName', filters.businessName);
     if (filters.email) params = params.set('email', filters.email);
-    if (filters.mobile) params = params.set('mobile', filters.mobile);
     if (filters.parish) params = params.set('parish', filters.parish);
+    if (filters.status) params = params.set('status', filters.status);
+    if (filters.existingRetailer) params = params.set('existingRetailer', filters.existingRetailer);
 
     return this.http.get<any[]>(`${this.baseUrl}/onboarding/get-application`, {
       params,

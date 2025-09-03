@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators, AbstractControl } from '@angular/forms';
-import { Application } from '../application';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Application } from '../application';
 
 @Component({
   selector: 'app-form',
@@ -21,43 +21,44 @@ export class Form implements OnInit {
 
   ngOnInit(): void {
     this.applicationForm = this.fb.group({
-  product: this.fb.array([], [this.minSelectedCheckboxes(1)]),
-  applicationSource: ['', Validators.required],
-  personalDetails: this.fb.group({
-    title: ['', Validators.required],
-    firstName: ['', Validators.required],
-    middleName: [''],
-    lastName: ['', Validators.required],
-    email: ['', [Validators.required, Validators.email]],
-    dateOfBirth: ['', Validators.required],
-    cellphone: ['', Validators.required],
-    businessPhone: [''],
-    homePhone: [''],
-    gender: ['', Validators.required],
-    addCoApplicant: ['', Validators.required],
-    isJamaicaResident: ['', Validators.required],
-    existingRetailer: ['', Validators.required],
-    retailerId: [''], // <-- added
-    otherCreationReason: [''] // <-- added
-  }),
-  businessInformation: this.fb.group({
-    businessName: ['', Validators.required],
-    country: ['', Validators.required],
-    parish: ['', Validators.required],
-    town: [''],
-    district: [''],
-    postalCode: [''],
-    address: ['', Validators.required],
-    doYouOwnBusiness: ['', Validators.required],
-    yearsInOperation: ['', Validators.required],
-    monthsInOperation: ['', Validators.required], // <-- added
-    ownOrRentLocation: ['', Validators.required]
-  }),
-  fileUpload: ['']
-});
-
+      product: this.fb.array([], [this.minSelectedCheckboxes(1)]),
+      applicationSource: ['', Validators.required],
+      personalDetails: this.fb.group({
+        title: ['', Validators.required],
+        firstName: ['', Validators.required],
+        middleName: [''],
+        lastName: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]],
+        dateOfBirth: ['', Validators.required],
+        cellphone: ['', Validators.required],
+        businessPhone: [''],
+        homePhone: [''],
+        gender: ['', Validators.required],
+        addCoApplicant: ['', Validators.required],
+        isJamaicaResident: ['', Validators.required],
+        existingRetailer: ['', Validators.required],
+        retailerId: [''],
+        otherCreationReason: ['']
+      }),
+      businessInformation: this.fb.group({
+        businessName: ['', Validators.required],
+        typeOfBusiness: [''],
+        country: ['', Validators.required],
+        parish: ['', Validators.required],
+        town: [''],
+        district: [''],
+        postalCode: [''],
+        address: ['', Validators.required],
+        doYouOwnBusiness: ['', Validators.required],
+        yearsInOperation: ['', Validators.required],
+        monthsInOperation: ['', Validators.required],
+        ownOrRentLocation: ['', Validators.required]
+      }),
+      fileUpload: ['']
+    });
 
     this.fetchLookups();
+    this.addCheckboxes();
   }
 
   get personalDetails() { return this.applicationForm.get('personalDetails') as FormGroup; }
@@ -71,6 +72,16 @@ export class Form implements OnInit {
       { name: 'Sports Betting – Just Bet', value: 'SPORTS' }
     ];
   }
+  onExistingRetailerChange(event: any): void {
+  const retailerControl = this.personalDetails.get('retailerId');
+  if (event.target.value === 'YES') {
+    retailerControl?.setValidators([Validators.required]);
+  } else {
+    retailerControl?.clearValidators();
+    retailerControl?.setValue('');
+  }
+  retailerControl?.updateValueAndValidity();
+}
 
   private addCheckboxes() {
     const productArray = this.applicationForm.get('product') as FormArray;
@@ -100,12 +111,17 @@ export class Form implements OnInit {
     });
   }
 
-  openModal(): void {
-    if (this.applicationForm.valid) this.isModalVisible = true;
-    else this.markFormGroupTouched(this.applicationForm);
-  }
-
+  
   closeModal(): void { this.isModalVisible = false; }
+
+  openModal(): void {
+  if (this.applicationForm.valid) {
+    this.isModalVisible = true; // open modal only if form is valid
+  } else {
+    this.markFormGroupTouched(this.applicationForm); // show errors
+  }
+}
+
 
   onSubmit(): void {
     if (!this.applicationForm.valid) {
@@ -115,48 +131,45 @@ export class Form implements OnInit {
 
     const raw = this.applicationForm.value;
 
-    // Map product checkboxes to services
     const services: string[] = raw.product
-  .map((checked: boolean, i: number) => checked ? this.productOptions[i].value : null)
-  .filter((v: string | null): v is string => v !== null);
-
+      .map((checked: boolean, i: number) => checked ? this.productOptions[i].value : null)
+      .filter((v: string | null): v is string => v !== null);
 
     const payload: any = {
-  services,
-  isJamaicaResident: raw.personalDetails.isJamaicaResident,
-  existingRetailer: raw.personalDetails.existingRetailer,
-  title: raw.personalDetails.title,
-  firstName: raw.personalDetails.firstName,
-  middleName: raw.personalDetails.middleName,
-  lastName: raw.personalDetails.lastName,
-  dateOfBirth: raw.personalDetails.dateOfBirth,
-  retailerId: raw.personalDetails.retailerId || null, // required
-  gender: raw.personalDetails.gender,
-  email: raw.personalDetails.email,
-  cellPhone: raw.personalDetails.cellphone,
-  businessPhone: raw.personalDetails.businessPhone,
-  homePhone: raw.personalDetails.homePhone,
-  coApplicant: raw.personalDetails.addCoApplicant,
-  coApplicantData: [],
-  businessName: raw.businessInformation.businessName,
-  addressStreet: raw.businessInformation.address,
-  parish: raw.businessInformation.parish,
-  county: raw.businessInformation.county || 'MIDDLESEX',
-  district: raw.businessInformation.district,
-  town: raw.businessInformation.town,
-  postalCode: raw.businessInformation.postalCode,
-  country: raw.businessInformation.country,
-  yearsInOperation: raw.businessInformation.yearsInOperation,
-  monthsInOperation: raw.businessInformation.monthsInOperation, // added
-  locationOwnership: raw.businessInformation.ownOrRentLocation,
-  creator: 'SELF',
-  otherCreationReason: raw.personalDetails.otherCreationReason, // added
-  screenName: 'APPLICATION',
-  businessType: 'CAR_WASH_AUTO_STORE',
-  businessOwnership: raw.businessInformation.doYouOwnBusiness,
-  document1: this.uploadedFiles[0] || null
-};
-
+      services,
+      isJamaicaResident: raw.personalDetails.isJamaicaResident,
+      existingRetailer: raw.personalDetails.existingRetailer,
+      title: raw.personalDetails.title,
+      firstName: raw.personalDetails.firstName,
+      middleName: raw.personalDetails.middleName,
+      lastName: raw.personalDetails.lastName,
+      dateOfBirth: raw.personalDetails.dateOfBirth,
+      retailerId: raw.personalDetails.retailerId || null,
+      gender: raw.personalDetails.gender,
+      email: raw.personalDetails.email,
+      cellPhone: raw.personalDetails.cellphone,
+      businessPhone: raw.personalDetails.businessPhone,
+      homePhone: raw.personalDetails.homePhone,
+      coApplicant: raw.personalDetails.addCoApplicant,
+      coApplicantData: [],
+      businessName: raw.businessInformation.businessName,
+      addressStreet: raw.businessInformation.address,
+      parish: raw.businessInformation.parish,
+      county: raw.businessInformation.county || 'MIDDLESEX',
+      district: raw.businessInformation.district,
+      town: raw.businessInformation.town,
+      postalCode: raw.businessInformation.postalCode,
+      country: raw.businessInformation.country,
+      yearsInOperation: raw.businessInformation.yearsInOperation,
+      monthsInOperation: raw.businessInformation.monthsInOperation,
+      locationOwnership: raw.businessInformation.ownOrRentLocation,
+      creator: 'SELF',
+      otherCreationReason: raw.personalDetails.otherCreationReason,
+      screenName: 'APPLICATION',
+      businessType: 'CAR_WASH_AUTO_STORE',
+      businessOwnership: raw.businessInformation.doYouOwnBusiness,
+      document1: this.uploadedFiles[0] || null
+    };
 
     const formData = new FormData();
     Object.keys(payload).forEach(key => {
@@ -207,3 +220,4 @@ export class Form implements OnInit {
     };
   }
 }
+

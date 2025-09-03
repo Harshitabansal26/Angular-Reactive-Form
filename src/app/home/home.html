@@ -1,48 +1,53 @@
-<div class="container mt-4">
-  <h1>Applications</h1>
+<div class="home-container">
+  <!-- Header -->
+  <div class="header-row" style="display: flex; justify-content: space-between; align-items: center;">
+    <h1>Retailer Onboarding</h1>
+    <button class="create-btn" (click)="createNewApplication()">Create New Application</button>
+  </div>
 
-  <!-- 🔍 Search Filters -->
-  <div class="row mb-3">
-    <div class="col-md-2">
-      <input class="form-control" [(ngModel)]="searchFields.applicationId" placeholder="Application ID" />
+  <!-- Search Filters -->
+  <div class="search-box">
+    <input [(ngModel)]="searchFields.businessName" placeholder="Business Name" />
+    <input [(ngModel)]="searchFields.applicationId" placeholder="Application ID" />
+    <input [(ngModel)]="searchFields.email" placeholder="Email" />
+    <input [(ngModel)]="searchFields.mobile" placeholder="Mobile" />
+    <input [(ngModel)]="searchFields.applicantName" placeholder="Applicant Name" />
+    <input [(ngModel)]="searchFields.parish" placeholder="Parish" />
+
+    <div class="search-center">
+      <select [(ngModel)]="searchFields.retailerType">
+        <option value="">All Retailers</option>
+        <option value="Yes">Existing Retailer</option>
+        <option value="No">New Retailer</option>
+      </select>
+
+      <input [(ngModel)]="searchFields.status" placeholder="Status" />
     </div>
-    <div class="col-md-3">
-      <input class="form-control" [(ngModel)]="searchFields.businessName" placeholder="Business Name" />
-    </div>
-    <div class="col-md-3">
-      <input class="form-control" [(ngModel)]="searchFields.email" placeholder="Email" />
-    </div>
-    <div class="col-md-2">
-      <input class="form-control" [(ngModel)]="searchFields.mobile" placeholder="Mobile" />
-    </div>
-    <div class="col-md-2 d-flex gap-2">
-      <button class="btn btn-primary w-100" (click)="searchApplications()">Search</button>
-      <button class="btn btn-success w-100" [routerLink]="['/form']">+ Add Application</button>
+
+    <!-- Buttons -->
+    <div class="search-actions">
+      <button class="search-btn" (click)="onSearch()">Search</button>
+      <button class="reset-btn" (click)="resetSearch()">Reset</button>
     </div>
   </div>
 
-  <!-- 📋 Applications Table -->
-  <table class="table table-bordered table-hover">
-    <thead class="table-dark">
-      <tr>
-        <th>Application ID</th>
-        <th>Business Name</th>
-        <th>Email</th>
-        <th>Mobile</th>
-        <th>Parish</th>
-        <th>Application Source</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let app of applications">
-  <td>{{ app.applicationId }}</td>
-  <td>{{ app.businessName }}</td>
-  <td>{{ app.email }}</td>
-  <td>{{ app.cellPhone }}</td>
-  <td>{{ app.parish }}</td>
-  <td>{{ app.applicationReceivedFrom }}</td>
-</tr>
+  <!-- Applications Table -->
+  <div class="table-container" *ngIf="filteredApplications.length > 0; else noData">
+    <table class="table">
+      <thead>
+        <tr>
+          <th *ngFor="let key of getKeys(filteredApplications[0])">{{ displayKey(key) }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let app of filteredApplications">
+          <td *ngFor="let key of getKeys(app)">{{ app[key] }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-    </tbody>
-  </table>
+  <ng-template #noData>
+    <p>No applications found.</p>
+  </ng-template>
 </div>
