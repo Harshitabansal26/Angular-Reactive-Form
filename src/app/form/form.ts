@@ -116,83 +116,97 @@ export class Form implements OnInit {
   closeModal(): void { this.isModalVisible = false; }
 
   openModal(): void {
-  if (this.applicationForm.valid) {
-    this.isModalVisible = true; // open modal only if form is valid
+  // if in review mode, skip validation check
+  if (this.reviewMode || this.applicationForm.valid) {
+    this.isModalVisible = true;
   } else {
-    this.markFormGroupTouched(this.applicationForm); // show errors
+    this.markFormGroupTouched(this.applicationForm);
   }
 }
 
+onConfirm(): void {
+  this.onSubmit();   // submit the form
+  console.log('Confirm clicked');
+}
 
-  onSubmit(): void {
-    if (!this.applicationForm.valid) {
-      this.markFormGroupTouched(this.applicationForm);
-      return;
-    }
-
-    const raw = this.applicationForm.value;
-
-    const services: string[] = raw.product
-      .map((checked: boolean, i: number) => checked ? this.productOptions[i].value : null)
-      .filter((v: string | null): v is string => v !== null);
-
-    const payload: any = {
-      services,
-      isJamaicaResident: raw.personalDetails.isJamaicaResident,
-      existingRetailer: raw.personalDetails.existingRetailer,
-      title: raw.personalDetails.title,
-      firstName: raw.personalDetails.firstName,
-      middleName: raw.personalDetails.middleName,
-      lastName: raw.personalDetails.lastName,
-      dateOfBirth: raw.personalDetails.dateOfBirth,
-      retailerId: raw.personalDetails.retailerId || null,
-      gender: raw.personalDetails.gender,
-      email: raw.personalDetails.email,
-      cellPhone: raw.personalDetails.cellphone,
-      businessPhone: raw.personalDetails.businessPhone,
-      homePhone: raw.personalDetails.homePhone,
-      coApplicant: raw.personalDetails.addCoApplicant,
-      coApplicantData: [],
-      businessName: raw.businessInformation.businessName,
-      addressStreet: raw.businessInformation.address,
-      parish: raw.businessInformation.parish,
-      county: raw.businessInformation.county || 'MIDDLESEX',
-      district: raw.businessInformation.district,
-      town: raw.businessInformation.town,
-      postalCode: raw.businessInformation.postalCode,
-      country: raw.businessInformation.country,
-      yearsInOperation: raw.businessInformation.yearsInOperation,
-      monthsInOperation: raw.businessInformation.monthsInOperation,
-      locationOwnership: raw.businessInformation.ownOrRentLocation,
-      creator: 'SELF',
-      otherCreationReason: raw.personalDetails.otherCreationReason,
-      screenName: 'APPLICATION',
-      businessType: 'CAR_WASH_AUTO_STORE',
-      businessOwnership: raw.businessInformation.doYouOwnBusiness,
-      document1: this.uploadedFiles[0] || null
-    };
-
-    const formData = new FormData();
-    Object.keys(payload).forEach(key => {
-      if (payload[key] !== null && payload[key] !== undefined) {
-        formData.append(key, payload[key]);
-      }
-    });
-
-    this.appService.addApplication(formData).subscribe({
-      next: _res => {
-        alert('Application submitted successfully!');
-        this.closeModal();
-        this.applicationForm.reset();
-        this.uploadedFiles = [];
-        this.addCheckboxes();
-      },
-      error: err => {
-        console.error(err);
-        alert('Failed to submit application.');
-      }
-    });
+onSubmit(): void {
+  console.log('Submitting form...', this.applicationForm.value);
+  if (!this.reviewMode && !this.applicationForm.valid) {
+    console.log('Form invalid');
+    this.markFormGroupTouched(this.applicationForm);
+    return;
   }
+console.log('Form valid, preparing payload...');
+  const raw = this.applicationForm.getRawValue();
+
+  const services: string[] = raw.product
+    .map((checked: boolean, i: number) => checked ? this.productOptions[i].value : null)
+    .filter((v: string | null): v is string => v !== null);
+
+  const payload: any = {
+    services,
+    isJamaicaResident: raw.personalDetails.isJamaicaResident,
+    existingRetailer: raw.personalDetails.existingRetailer,
+    title: raw.personalDetails.title,
+    firstName: raw.personalDetails.firstName,
+    middleName: raw.personalDetails.middleName,
+    lastName: raw.personalDetails.lastName,
+    dateOfBirth: raw.personalDetails.dateOfBirth,
+    retailerId: raw.personalDetails.retailerId || null,
+    gender: raw.personalDetails.gender,
+    email: raw.personalDetails.email,
+    cellPhone: raw.personalDetails.cellphone,
+    businessPhone: raw.personalDetails.businessPhone,
+    homePhone: raw.personalDetails.homePhone,
+    coApplicant: raw.personalDetails.addCoApplicant,
+    coApplicantData: [],
+    businessName: raw.businessInformation.businessName,
+    addressStreet: raw.businessInformation.address,
+    parish: raw.businessInformation.parish,
+    county: raw.businessInformation.county || 'MIDDLESEX',
+    district: raw.businessInformation.district,
+    town: raw.businessInformation.town,
+    postalCode: raw.businessInformation.postalCode,
+    country: raw.businessInformation.country,
+    yearsInOperation: raw.businessInformation.yearsInOperation,
+    monthsInOperation: raw.businessInformation.monthsInOperation,
+    locationOwnership: raw.businessInformation.ownOrRentLocation,
+    creator: 'SELF',
+    otherCreationReason: raw.personalDetails.otherCreationReason,
+    screenName: 'APPLICATION',
+    businessType: 'CAR_WASH_AUTO_STORE',
+    businessOwnership: raw.businessInformation.doYouOwnBusiness,
+    document1: this.uploadedFiles[0] || null
+  };
+  
+  const formData = new FormData();
+  Object.keys(payload).forEach(key => {
+    if (payload[key] !== null && payload[key] !== undefined) {
+      formData.append(key, payload[key]);
+    }
+  });
+
+  this.appService.addApplication(formData).subscribe({
+    next: _res => {
+      alert('Application submitted successfully!');
+      this.closeModal();
+
+      // ✅ Reset form state
+      this.applicationForm.reset();
+      this.uploadedFiles = [];
+      this.addCheckboxes();
+
+      // ✅ Exit review mode & re-enable form
+      this.reviewMode = false;
+      this.applicationForm.enable();
+    },
+    error: err => {
+      console.error(err);
+      alert('Failed to submit application.');
+    }
+  });
+}
+
 
   private markFormGroupTouched(formGroup: FormGroup | FormArray) {
     Object.values(formGroup.controls).forEach(control => {
@@ -250,6 +264,21 @@ removeFile(index: number): void {
 viewFile(file: File): void {
   const fileURL = URL.createObjectURL(file);
   window.open(fileURL, '_blank');
+}
+reviewMode = false;
+
+enterReviewMode(): void {
+  if (this.applicationForm.valid) {
+    this.reviewMode = true;
+    this.applicationForm.disable(); // disable all fields
+  } else {
+    this.markFormGroupTouched(this.applicationForm);
+  }
+}
+
+backToEdit(): void {
+  this.reviewMode = false;
+  this.applicationForm.enable(); // re-enable fields
 }
 
   private minSelectedCheckboxes(min = 1) {
