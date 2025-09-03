@@ -15,6 +15,7 @@ export class Form implements OnInit {
   applicationForm!: FormGroup;
   lookupData: any = {};
   uploadedFiles: File[] = [];
+  uploadError: string = '';
   isModalVisible = false;
 
   constructor(private fb: FormBuilder, private appService: Application) {}
@@ -209,8 +210,47 @@ export class Form implements OnInit {
     if (event.dataTransfer?.files) this.handleFiles(event.dataTransfer.files);
   }
   handleFiles(files: FileList): void {
-    for (let i = 0; i < files.length; i++) this.uploadedFiles.push(files[i]);
+  this.uploadError = ''; // reset error message
+
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+
+    // ✅ 1. Check limit (max 10 files)
+    if (this.uploadedFiles.length >= 10) {
+      this.uploadError = 'Maximum of 10 files allowed.';
+      break;
+    }
+
+    // ✅ 2. Check file size (10MB limit)
+    if (file.size > 10 * 1024 * 1024) {
+      this.uploadError = `File "${file.name}" exceeds 10MB limit.`;
+      continue;
+    }
+
+    // ✅ 3. Check file type (allow jpg, png, pdf, docx)
+    const allowedTypes = [
+      'image/jpeg', 'image/png',
+      'application/pdf',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+    ];
+    if (!allowedTypes.includes(file.type)) {
+      this.uploadError = `File "${file.name}" is not a supported format.`;
+      continue;
+    }
+
+    // ✅ 4. Add to list
+    this.uploadedFiles.push(file);
   }
+}
+removeFile(index: number): void {
+  this.uploadedFiles.splice(index, 1);
+  this.uploadError = ''; // reset error if previously blocked
+}
+
+viewFile(file: File): void {
+  const fileURL = URL.createObjectURL(file);
+  window.open(fileURL, '_blank');
+}
 
   private minSelectedCheckboxes(min = 1) {
     return (control: AbstractControl) => {

@@ -32,20 +32,64 @@
   </div>
 
   <!-- Applications Table -->
-  <div class="table-container" *ngIf="filteredApplications.length > 0; else noData">
+<div class="table-container" *ngIf="filteredApplications.length > 0; else noData">
+  <div class="table-wrapper">
     <table class="table">
       <thead>
         <tr>
-          <th *ngFor="let key of getKeys(filteredApplications[0])">{{ displayKey(key) }}</th>
+          <th *ngFor="let key of getKeys(filteredApplications[0])">
+            {{ displayKey(key) }}
+          </th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let app of filteredApplications">
-          <td *ngFor="let key of getKeys(app)">{{ app[key] }}</td>
+          <td *ngFor="let key of getKeys(app)">
+            {{ app[key] }}
+          </td>
         </tr>
       </tbody>
     </table>
   </div>
+</div>
+
+<!-- Pagination Controls -->
+<div class="pagination-container" *ngIf="totalPages > 1">
+  <!-- Prev Button -->
+  <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">
+    Prev
+  </button>
+
+  <!-- First Page -->
+  <button (click)="goToPage(1)" [class.active]="currentPage === 1">1</button>
+
+  <!-- Left Ellipsis -->
+  <span *ngIf="currentPage > 3">...</span>
+
+  <!-- Middle Pages -->
+  <ng-container *ngFor="let page of [currentPage - 1, currentPage, currentPage + 1]">
+    <button *ngIf="page > 1 && page < totalPages"
+            (click)="goToPage(page)"
+            [class.active]="currentPage === page">
+      {{ page }}
+    </button>
+  </ng-container>
+
+  <!-- Right Ellipsis -->
+  <span *ngIf="currentPage < totalPages - 2">...</span>
+
+  <!-- Last Page -->
+  <button *ngIf="totalPages > 1"
+          (click)="goToPage(totalPages)"
+          [class.active]="currentPage === totalPages">
+    {{ totalPages }}
+  </button>
+
+  <!-- Next Button -->
+  <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">
+    Next
+  </button>
+</div>
 
   <ng-template #noData>
     <p>No applications found.</p>

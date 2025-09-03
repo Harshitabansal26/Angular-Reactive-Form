@@ -302,24 +302,53 @@
     </div>
 
     <!-- File Upload -->
-    <div class="form-section">
-      <!-- <h2>Section: File Upload</h2> -->
-      <div
-        class="file-upload-box"
-        (dragover)="onDragOver($event)"
-        (dragleave)="onDragLeave($event)"
-        (drop)="onDrop($event)"
-        (click)="fileInput.click()"
-        #fileDropZone
-      >
-        <p>Drag and Drop to upload a file or <a href="#" (click)="$event.preventDefault()">Browse</a></p>
-        <small>Supports max 1 file, 10MB. Formats: jpg, png, pdf, docx.</small>
-      </div>
-      <input type="file" id="uploadDocuments" (change)="onFileSelected($event)" #fileInput style="display: none;" />
-      <div class="file-list">
-        <div *ngFor="let file of uploadedFiles" class="file-item">{{ file.name }}</div>
-      </div>
+<div class="form-section">
+  <div
+    class="file-upload-box"
+    (dragover)="onDragOver($event)"
+    (dragleave)="onDragLeave($event)"
+    (drop)="onDrop($event)"
+    (click)="fileInput.click()"
+    [class.disabled]="uploadedFiles.length >= 10"
+    #fileDropZone
+  >
+    <i class="fa fa-cloud-upload upload-icon"></i>
+    <p *ngIf="uploadedFiles.length < 10">
+      Drag & Drop to upload files or 
+      <a href="#" (click)="$event.preventDefault()">Browse</a>
+    </p>
+    <p *ngIf="uploadedFiles.length >= 10" class="upload-limit-message">
+      Maximum of 10 files uploaded. Remove a file to add more.
+    </p>
+    <small>Supports max 10 files, 10MB each. Formats: jpg, png, pdf, docx.</small>
+  </div>
+
+  <!-- Hidden File Input -->
+  <input 
+    type="file" 
+    id="uploadDocuments" 
+    (change)="onFileSelected($event)" 
+    #fileInput 
+    [disabled]="uploadedFiles.length >= 10"
+    multiple
+    style="display: none;" 
+  />
+
+  <!-- Uploaded File List -->
+  <div class="uploaded-files">
+    <div *ngFor="let file of uploadedFiles; let i = index" class="uploaded-file">
+      <span class="file-name">{{ file.name }}</span>
+      <button type="button" class="view-btn" (click)="viewFile(file)">👁</button>
+      <button type="button" class="remove-btn" (click)="removeFile(i)">✖</button>
     </div>
+
+    <!-- Error Message -->
+    <div *ngIf="uploadError" class="upload-error">
+      {{ uploadError }}
+    </div>
+  </div>
+</div>
+
 
     <!-- Buttons -->
     <div class="button-group">
