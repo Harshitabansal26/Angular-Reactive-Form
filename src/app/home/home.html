@@ -1,98 +1,147 @@
 <div class="home-container">
-  <!-- Header -->
-  <div class="header-row" style="display: flex; justify-content: space-between; align-items: center;">
-    <h1>Retailer Onboarding</h1>
-    <button class="create-btn" (click)="createNewApplication()">Create New Application</button>
+  <!-- Loader -->
+  <div class="loader-overlay" *ngIf="loading">
+    <div class="spinner"></div>
   </div>
 
-  <!-- Search Filters -->
-  <div class="search-box">
-    <input [(ngModel)]="searchFields.businessName" placeholder="Business Name" />
-    <input [(ngModel)]="searchFields.applicationId" placeholder="Application ID" />
-    <input [(ngModel)]="searchFields.email" placeholder="Email" />
-    <input [(ngModel)]="searchFields.mobile" placeholder="Mobile" />
-    <input [(ngModel)]="searchFields.applicantName" placeholder="Applicant Name" />
-    <input [(ngModel)]="searchFields.parish" placeholder="Parish" />
-
-    <div class="search-center">
-      <select [(ngModel)]="searchFields.retailerType">
-        <option value="">All Retailers</option>
-        <option value="Yes">Existing Retailer</option>
-        <option value="No">New Retailer</option>
-      </select>
-
-      <input [(ngModel)]="searchFields.status" placeholder="Status" />
-    </div>
-
-    <!-- Buttons -->
-    <div class="search-actions">
-      <button class="search-btn" (click)="onSearch()">Search</button>
-      <button class="reset-btn" (click)="resetSearch()">Reset</button>
-    </div>
-  </div>
-
-  <!-- Applications Table -->
-<div class="table-container" *ngIf="filteredApplications.length > 0; else noData">
-  <div class="table-wrapper">
-    <table class="table">
-      <thead>
-        <tr>
-          <th *ngFor="let key of getKeys(filteredApplications[0])">
-            {{ displayKey(key) }}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let app of filteredApplications">
-          <td *ngFor="let key of getKeys(app)">
-            {{ app[key] }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-<!-- Pagination Controls -->
-<div class="pagination-container" *ngIf="totalPages > 1">
-  <!-- Prev Button -->
-  <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">
-    Prev
-  </button>
-
-  <!-- First Page -->
-  <button (click)="goToPage(1)" [class.active]="currentPage === 1">1</button>
-
-  <!-- Left Ellipsis -->
-  <span *ngIf="currentPage > 3">...</span>
   
+  <div class="card-container">
+    
+    <div class="header-row">
+      <h1>Retailer Onboarding</h1>
+      <button class="create-btn" (click)="createNewApplication()">+ Create New Application</button>
+    </div>
 
-  <!-- Middle Pages -->
-  <ng-container *ngFor="let page of [currentPage - 1, currentPage, currentPage + 1]">
-    <button *ngIf="page > 1 && page < totalPages"
-            (click)="goToPage(page)"
-            [class.active]="currentPage === page">
-      {{ page }}
-    </button>
-  </ng-container>
+    <!-- Search Filters -->
+    <div class="search-box">
+      <div class="search-row">
+        <div class="search-field">
+          <label>Business Name</label>
+          <input [(ngModel)]="searchFields.businessName" placeholder="Business Name" />
+        </div>
 
-  <!-- Right Ellipsis -->
-  <span *ngIf="currentPage < totalPages - 2">...</span>
+        <div class="search-field">
+          <label>Application ID</label>
+          <input [(ngModel)]="searchFields.applicationId" placeholder="Application ID" />
+        </div>
 
-  <!-- Last Page -->
-  <button *ngIf="totalPages > 1"
-          (click)="goToPage(totalPages)"
-          [class.active]="currentPage === totalPages">
-    {{ totalPages }}
-  </button>
+        <div class="search-field">
+          <label>Email</label>
+          <input [(ngModel)]="searchFields.email" placeholder="Email" />
+        </div>
 
-  <!-- Next Button -->
-  <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">
-    Next
-  </button>
-</div>
+        <div class="search-field">
+          <label>Mobile</label>
+          <input [(ngModel)]="searchFields.mobile" placeholder="Mobile" />
+        </div>
 
-  <ng-template #noData>
-    <p>No applications found.</p>
-  </ng-template>
+        <div class="search-field">
+          <label>Applicant Name</label>
+          <input [(ngModel)]="searchFields.applicantName" placeholder="Applicant Name" />
+        </div>
+
+        <div class="search-field">
+          <label>Parish</label>
+          <input [(ngModel)]="searchFields.parish" placeholder="Parish" />
+        </div>
+
+        <div class="search-field">
+          <label>Retailer Type</label>
+          <select [(ngModel)]="searchFields.retailerType">
+            <option value="">All Retailers</option>
+            <option value="Yes">Existing Retailer</option>
+            <option value="No">New Retailer</option>
+          </select>
+        </div>
+
+        <div class="search-field">
+          <label>Status</label>
+          <input [(ngModel)]="searchFields.status" placeholder="Status" />
+        </div>
+      </div>
+
+      <div class="search-actions">
+        <button class="search-btn" (click)="onSearch()">Search</button>
+        <button class="reset-btn" (click)="resetSearch()">Reset</button>
+      </div>
+    </div>
+
+    <!-- Applications Table -->
+    <div class="table-container" *ngIf="filteredApplications.length > 0 && !loading; else noData">
+      <div class="table-wrapper">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>S. No.</th>
+              <th>Application Date</th>
+              <th *ngFor="let key of getKeys(filteredApplications[0])">
+                {{ displayKey(key) }}
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let app of filteredApplications; let i = index">
+              <td>{{ (currentPage - 1) * limit + i + 1 }}</td>
+
+              <!-- Date -->
+              <td>
+                <ng-container *ngIf="isDateLike(getApplicationDate(app)); else rawDate">
+                  {{ getApplicationDate(app) | date:'yyyy-MM-dd' }}
+                </ng-container>
+                <ng-template #rawDate>{{ getApplicationDate(app) || '-' }}</ng-template>
+              </td>
+
+              <td *ngFor="let key of getKeys(app)">
+                <ng-container [ngSwitch]="key">
+                  <span *ngSwitchCase="'status'" [ngClass]="statusClass(app.status)">
+                    {{ formatStatus(app.status) }}
+                  </span>
+
+                  <span *ngSwitchDefault>
+                    {{ app[key] }}
+                  </span>
+                </ng-container>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination-container" *ngIf="totalPages > 1 && !loading">
+      <button class="page-btn" (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">PREV</button>
+
+      <button class="page-btn" (click)="goToPage(1)" [class.active]="currentPage === 1">1</button>
+
+      <span class="dots" *ngIf="currentPage > 3">…</span>
+
+      <ng-container *ngFor="let page of [currentPage - 1, currentPage, currentPage + 1]">
+        <button
+          class="page-btn"
+          *ngIf="page > 1 && page < totalPages"
+          (click)="goToPage(page)"
+          [class.active]="currentPage === page">
+          {{ page }}
+        </button>
+      </ng-container>
+
+      <span class="dots" *ngIf="currentPage < totalPages - 2">…</span>
+
+      <button
+        class="page-btn"
+        *ngIf="totalPages > 1"
+        (click)="goToPage(totalPages)"
+        [class.active]="currentPage === totalPages">
+        {{ totalPages }}
+      </button>
+
+      <button class="page-btn" (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">NEXT</button>
+    </div>
+
+    <ng-template #noData>
+      <p *ngIf="!loading" class="no-data">No applications found.</p>
+    </ng-template>
+  </div>
 </div>
