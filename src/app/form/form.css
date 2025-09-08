@@ -1,3 +1,7 @@
+
+:host {
+  font-family: "Segoe UI", Arial, sans-serif !important;
+}
 body {
   margin: 0;
   padding: 0;
@@ -7,11 +11,41 @@ body {
   color: #212529;
   overflow-x: hidden;
 }
+.page-heading {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.page-heading .separator {
+  margin: 0 0.5rem;
+  font-weight: normal;
+  
+}
+
+.page-heading .sub-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  
+}
+
+.review-heading {
+  text-align: center;   
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding-bottom: 0.2rem;
+  margin-top: 0.5rem;
+  
+}
+.highlight-label {
+  font-size: 16px;       
+  font-weight: 600; 
+  color: #212529;        
+}
 
 /* ========== CHECKBOXES ========== */
 .checkbox-group {
   display: flex;
-  gap: 1.5rem; /* space between checkboxes */
+  gap: 1.5rem; 
   flex-wrap: wrap;
 }
 
@@ -36,7 +70,7 @@ body {
   transform: scale(1.2);
 }
 
-/* remove red star on labels */
+/* to remove red star on labels */
 .checkbox-item label::after,
 .radio-item label::after {
   content: none !important;
@@ -65,21 +99,41 @@ form {
 
 /* ========== HEADINGS ========== */
 h1 {
-  font-size: 1.5rem;
-  font-weight: 700;
+  
   color: #212529;
-  margin-bottom: 1rem;
-  border-bottom: 1px solid #dee2e6;
-  padding-bottom: 0.5rem;
+  /* margin-bottom: 5px; */
+  border-bottom: 2px solid #dee2e6;
+  padding-bottom: 25px;
 }
 
 .form-section h2 {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 600;
-  color: #343a40;
+  color: black;
+  margin-top:0px;
   margin-bottom: 0.75rem;
   border-bottom: none;
   padding-bottom: 0;
+}
+label[for="applicationSource"] {
+  font-weight: 600;   
+  font-size: 15px;    
+}
+
+.checkbox-item {
+  border: 1px solid #ccc;
+  padding: 6px 12px;
+  border-radius: 6px;
+  display: inline-block;
+  margin: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+
+.checkbox-item:has(input:checked) {
+  background-color: #d4edda;  
+  border-color: #28a745;       
 }
 
 /* ========== FORM LAYOUT ========== */
@@ -96,7 +150,8 @@ h1 {
 }
 
 .form-group label {
-  font-weight: 500;
+  font-size: 14px;
+  /* font-weight: 600; */
   margin-bottom: 0.25rem;
 }
 
@@ -192,14 +247,16 @@ input#monthsInOperation {
   border-radius: 8px;
   padding: 2rem;
   text-align: center;
-  background: #f9fff9;
-  color: #28a745;
+  background-color: #e6f9e6;
+  color: black;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.75rem;
+  max-width: 1200px;
+  margin: 0 auto;     
 }
 
 .file-upload-box:hover {
@@ -217,6 +274,13 @@ input#monthsInOperation {
   font-size: 40px;
   color: #28a745;
 }
+.upload-note {
+  display: block;
+  margin-top: 6px;
+  font-size: 13px;
+  color: #6c757d; 
+  text-align: center;
+}
 
 /* uploaded files container */
 .uploaded-files {
@@ -226,7 +290,6 @@ input#monthsInOperation {
   margin-top: 10px;
 }
 
-/* each uploaded file chip */
 .uploaded-file {
   display: inline-flex;
   align-items: center;
@@ -241,15 +304,15 @@ input#monthsInOperation {
   text-overflow: ellipsis;
 }
 
-/* file name inside chip */
 .file-name {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   max-width: 160px;
+  font-weight: 600px;
 }
 
-/* remove button */
+
 .remove-btn {
   background: none;
   border: none;
@@ -277,7 +340,6 @@ input#monthsInOperation {
   font-weight: 500;
 }
 
-/* view button */
 .view-btn {
   background: none;
   border: none;
@@ -317,7 +379,9 @@ button:hover {
 }
 
 .btn-cancel {
-  background: #6c757d;
+  color: black;
+  background: white;
+  border: 1px solid black;
 }
 
 .btn-cancel:hover {
@@ -337,30 +401,21 @@ button:hover {
   cursor: not-allowed;
   opacity: 0.7;
 }
-
-/* modal buttons */
-.modal-footer {
-  display: flex;
-  justify-content: flex-end;
-  gap: 1rem;
-  margin-top: 1rem;
+.btn-cancel,
+.btn-create {
+  width: 150px; 
+  text-align: center;
+  border-radius: 5px;
 }
 
-.btn-modal-cancel {
-  background: #6c757d;
+input:disabled,
+select:disabled,
+textarea:disabled {
+  background-color: #f0f0f0;  
+  color: #495057;             
+  cursor: not-allowed;       
 }
 
-.btn-modal-cancel:hover {
-  background: #5a6268;
-}
-
-.btn-modal-confirm {
-  background: #007bff;
-}
-
-.btn-modal-confirm:hover {
-  background: #0056b3;
-}
 
 /* ========== MODALS ========== */
 .modal-overlay {
@@ -376,14 +431,48 @@ button:hover {
   z-index: 999;
 }
 
-.modal-content {
-  background: white;
-  padding: 1.5rem;
+.custom-modal {
+  border: 2px solid #28a745;   
+  background-color: #f6fff6;
   border-radius: 8px;
-  max-width: 400px;
-  width: 100%;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  text-align: center;
+  padding: 1.5rem;
 }
+
+
+.custom-modal p {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+  color: #28a745 ;
+}
+
+.custom-modal .btn-cancel {
+  border: 2px solid #6c757d;
+  background-color: white;
+  color: #000;
+  padding: 0.5rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 500;
+  margin-right: 10px;
+}
+
+.custom-modal .btn-cancel:hover {
+  background-color: #f0f0f0;
+}
+
+.custom-modal .btn-confirm {
+  background-color: #28a745;
+  color: white;
+  padding: 0.6rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 600;
+  border: none;
+}
+
+.custom-modal .btn-confirm:hover {
+  background-color: #218838;
+}
+
 
 /* ========== GENERAL STYLES ========== */
 input[type="checkbox"],

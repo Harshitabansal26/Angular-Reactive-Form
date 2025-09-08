@@ -1,4 +1,12 @@
 
+/* @font-face {
+  font-family: "MetropolisRegular";
+  src: url("/assets/fonts/MetropolisRegular.woff2") format("woff2"),
+       url("/assets/fonts/MetropolisRegular.woff") format("woff"),
+       url("/assets/fonts/MetropolisRegular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+} */
 .home-container {
   background-color: #f9fafb;
   min-height: 100vh;
@@ -22,7 +30,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 18px 24px;
-  border-bottom: 1px solid #eaeaea;
+  border-bottom: 2px solid #eaeaea;
   background: #fff;
 }
 
@@ -36,13 +44,13 @@
 /* Create button */
 .create-btn {
   background: #ffffff;
-  border: 2px solid #28a745;
-  color: #28a745;
-  padding: 8px 18px;
+  border: 2px solid #5dd47a;
+  color: #5dd47a;
+  padding: 8px 14px;
   border-radius: 6px;
   cursor: pointer;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 550px;
   transition: all 0.2s ease-in-out;
 }
 
@@ -168,9 +176,9 @@
 }
 
 .table th {
-  font-weight: 600;
+  font-weight: 700;
   font-size: 14px;
-  color: #444;
+  color: #6c757d;
   padding: 12px 14px;
   text-align: left;
   border-bottom: 1px solid #e6e6e6;
@@ -180,7 +188,7 @@
   padding: 14px 14px;
   border-bottom: 1px solid #f0f0f0;
   color: #333;
-  font-weight: 600;
+  font-weight: 550;
 }
 
 .table tbody tr:hover {

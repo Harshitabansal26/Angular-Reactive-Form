@@ -1,7 +1,12 @@
 <div class="form-container">
   <form [formGroup]="applicationForm">
-    <h1 *ngIf="!reviewMode">Business Onboarding: Add New Application</h1>
-<h1 *ngIf="reviewMode">Review Form Page</h1>
+    <h1 *ngIf="!reviewMode" class="page-heading">
+  <span class="main-title">Business Onboarding</span>
+  <span class="separator"> &gt; </span>
+  <span class="sub-title">Add New Application</span>
+</h1>
+
+<h1 *ngIf="reviewMode" class="review-heading">Review Form Page</h1>
 
     <!-- Product Section -->
     <div class="form-section">
@@ -19,14 +24,26 @@
         </div>
       </div>
     </div>
-    <!-- Application Source --> <div class="form-section"> <!-- <h2>Application Source</h2> --> <div class="form-group required"> <label for="applicationSource">Application Received From</label> <select id="applicationSource" formControlName="applicationSource"> <option value="">Select...</option> <option *ngFor="let source of lookupData.applicationReceiveFrom" [value]="source.key"> {{ source.value }} </option> </select> <div *ngIf="applicationForm.get('applicationSource')?.touched && applicationForm.get('applicationSource')?.invalid" class="error-message"> Please select an option. </div> </div> </div>
+    <!-- Application Source -->
+    <div class="form-section">
+         
+      <div class="form-group required">
+        <label for="applicationSource">Application Received From</label>
+          <select id="applicationSource" formControlName="applicationSource">
+            <option value="">Select...</option>
+            <option *ngFor="let source of lookupData.applicationReceiveFrom" [value]="source.key"> {{ source.value }} </option> 
+            </select>
+            <div *ngIf="applicationForm.get('applicationSource')?.touched && applicationForm.get('applicationSource')?.invalid" class="error-message"> Please select an option.
+            </div>
+        </div>
+    </div>
     <!-- Residency + Retailer -->
 <div class="form-section" formGroupName="personalDetails">
   <div class="form-row row-2">
 
     <!-- Jamaica Resident -->
     <div class="form-group required">
-      <label> <b>Are you a Jamaica Resident? </b></label>
+      <label class="highlight-label"> Are you a Jamaica Resident? </label>
       <div class="radio-group">
         <div class="radio-item">
           <input type="radio" id="jamaica-yes" value="YES" formControlName="isJamaicaResident" />
@@ -44,7 +61,7 @@
 
     <!-- Existing Retailer -->
     <div class="form-group required">
-      <label><b>Are you an existing Retailer?</b></label>
+      <label class="highlight-label">Are you an existing Retailer?</label>
       <div class="radio-group">
         <div class="radio-item">
           <input type="radio" id="retailer-yes" value="YES" formControlName="existingRetailer" (change)="onExistingRetailerChange($event)" />
@@ -58,7 +75,7 @@
 
       <!-- Conditional Retailer ID input -->
       <div *ngIf="personalDetails.get('existingRetailer')?.value === 'YES'" class="retailer-id-input">
-        <label for="retailerId">Retailer ID</label>
+        <label for="retailerId" class="highlight-label">Retailer ID</label>
         <input type="text" id="retailerId" formControlName="retailerId" />
         <div *ngIf="personalDetails.get('retailerId')?.touched && personalDetails.get('retailerId')?.invalid" class="error-message">
           Please enter the Retailer ID.
@@ -147,7 +164,7 @@
       <br>
       <!-- Gender -->
       <div class="form-group required">
-        <label><b>Gender</b></label>
+        <label class="highlight-label">Gender</label>
         <div class="radio-group">
           <div class="radio-item">
             <input type="radio" id="gender-male" value="MALE" formControlName="gender" />
@@ -165,7 +182,7 @@
       <br>
       <!-- Co-Applicant -->
       <div class="form-group required">
-        <label><b>Add Co-Applicant</b></label>
+        <label class="highlight-label">Add Co-Applicant</label>
         <div class="radio-group">
           <div class="radio-item">
             <input type="radio" id="coapp-yes" value="YES" formControlName="addCoApplicant" />
@@ -248,7 +265,7 @@
       <div class="form-row years-months">
         <div class="left-section">
           <div class="form-group required">
-            <label><b>Do you own the business?</b></label>
+            <label class="highlight-label">Do you own the business?</label>
             <div class="radio-group">
               <div class="radio-item">
                 <input type="radio" id="own-business-yes" value="YES" formControlName="doYouOwnBusiness" />
@@ -285,7 +302,7 @@
       </div>
 
       <div class="form-group required">
-        <label><b>Do you own or rent the location?</b></label>
+        <label class="highlight-label">Do you own or rent the location?</label>
         <div class="radio-group">
           <div class="radio-item">
             <input type="radio" id="own-location" value="OWN" formControlName="ownOrRentLocation" />
@@ -302,7 +319,8 @@
       </div>
     </div>
 
-    <!-- File Upload -->
+ 
+<!-- File Upload -->
 <div class="form-section">
   <div
     class="file-upload-box"
@@ -321,8 +339,13 @@
     <p *ngIf="uploadedFiles.length >= 10" class="upload-limit-message">
       Maximum of 10 files uploaded. Remove a file to add more.
     </p>
-    <small>Supports max 10 files, 10MB each. Formats: jpg, png, pdf, docx.</small>
   </div>
+
+  <!-- Note moved outside -->
+  <small class="upload-note">
+    Supports max 10 files, 10MB each. Formats: jpg, png, pdf, docx.
+  </small>
+</div>
 
   <!-- Hidden File Input -->
   <input 
@@ -348,7 +371,7 @@
       {{ uploadError }}
     </div>
   </div>
-</div>
+
 
 
     <!-- Buttons -->
@@ -370,16 +393,14 @@
 
 <!-- Modal -->
 <div class="modal-overlay" *ngIf="isModalVisible">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h4>Confirm Submission</h4>
-    </div>
-    <div class="modal-body">
+  <div class="custom-modal">
+    
+    
       <p>Are you sure you want to submit this form?</p>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-modal-cancel" (click)="closeModal()">Cancel</button>
-      <button class="btn btn-modal-confirm" (click)="onConfirm()">Confirm</button>
-    </div>
+    
+    
+      <button class="btn-cancel" (click)="closeModal()">Cancel</button>
+      <button class="btn-confirm" (click)="onConfirm()">Confirm</button>
+    
   </div>
 </div>

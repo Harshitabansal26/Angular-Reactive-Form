@@ -150,7 +150,9 @@ export class Home implements OnInit {
       existingRetailer: 'Retailer Type',
       mobile: 'Mobile'
     };
-    return map[key] || key;
+    const label = map[key] || key;
+
+  return label.charAt(0).toUpperCase() + label.slice(1);
   }
 
 
