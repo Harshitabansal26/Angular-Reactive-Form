@@ -43,13 +43,12 @@ body {
   color: #212529;        
 }
 
-/* ========== CHECKBOXES ========== */
 .checkbox-group {
   display: flex;
   gap: 1.5rem; 
   flex-wrap: wrap;
+  
 }
-
 
 .checkbox-item:hover {
   border-color: #28a745;
@@ -60,11 +59,22 @@ body {
   transform: scale(1.2);
 }
 
-/* to remove red star on labels */
 .checkbox-item label::after,
 .radio-item label::after {
   content: none !important;
 }
+.checkbox-item {
+  border: 1px solid #ccc;
+  padding: 7px 20px;   
+  border-radius: 6px;
+  display: flex;        
+  align-items: center;
+  gap: 10px;            
+  margin: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
 
 /* ========== FORM CONTAINER ========== */
 .form-container {
@@ -110,15 +120,6 @@ label[for="applicationSource"] {
   font-size: 15px;    
 }
 
-.checkbox-item {
-  border: 1px solid #ccc;
-  padding: 6px 12px;
-  border-radius: 6px;
-  display: inline-block;
-  margin: 5px;
-  cursor: pointer;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
-}
 
 
 .checkbox-item:has(input:checked) {
@@ -135,7 +136,7 @@ label[for="applicationSource"] {
 }
 .form-row.row-6 {
   display: grid;
-  grid-template-columns: 0.6fr 1fr 1fr 1fr 1.5fr 1fr;
+  grid-template-columns: repeat(6, 1fr);
   gap: 1rem;
   align-items: end;
   margin-bottom: 20px;
@@ -155,14 +156,41 @@ label[for="applicationSource"] {
 
 .form-row.row-6-phones {
   display: grid;
-  grid-template-columns: 0.6fr 1fr 1fr 1fr 1.5fr 1fr; 
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1rem;
+  align-items: end;
+  margin-bottom: 20px;
+}
+.form-row.row-4 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 2fr; 
   gap: 1rem;
   align-items: end;
   margin-bottom: 20px;
 }
 
+.form-row.row-4 input,
+.form-row.row-4 textarea {
+  height: 38px;   
+  padding: 0.7rem 0.65rem;
+  resize: none;   
+  box-sizing: border-box;
+}
+.form-row.row-4-business {
+  display: grid;
+  grid-template-columns: 1fr 1fr 0.7fr 0.7fr; 
+  gap: 1rem;
+  align-items: end;
+  margin-bottom: 20px;
+}
+
+.form-row.row-4-business input,
+.form-row.row-4-business select {
+  height: 38px;  
+}
+
 .form-row .empty {
-  visibility: hidden; /* space lega but dikhai nahi dega */
+  visibility: hidden; 
 }
 
 .form-group.required > label::after {
@@ -171,7 +199,6 @@ label[for="applicationSource"] {
   margin-left: 2px;
 }
 
-/* retailer id input */
 .retailer-id-input {
   display: inline-block;
   margin-left: 20px;
@@ -192,9 +219,9 @@ input[type="tel"],
 input[type="number"],
 select,
 textarea {
-  padding: 0.5rem 0.65rem;
-  border: 1px solid #ced4da;
-  border-radius: 4px;
+  padding: 0.6rem 0.65rem;
+  border: 1px solid #9ca3af;
+  border-radius: 6px;
   background: #fff;
   font-size: 14px;
   transition: border 0.2s ease;
@@ -205,7 +232,7 @@ textarea {
 textarea {
   min-height: auto;
   resize: vertical;
-  padding-top: 0.5rem;
+  padding-top: 0.6rem;
   padding-bottom: 0.5rem;
 }
 
@@ -270,6 +297,18 @@ input#monthsInOperation {
   margin: 0 auto;     
 }
 
+.file-upload-box a {
+  color: #28a745; 
+  font-weight: 600;
+}
+
+.file-upload-box a:hover {
+  color: #218838;        
+}
+
+.file-upload-box p {
+  font-weight: 600;
+}
 .file-upload-box:hover {
   background: #eaffea;
   border-color: #218838;
@@ -281,10 +320,6 @@ input#monthsInOperation {
   cursor: not-allowed;
 }
 
-.upload-icon {
-  font-size: 40px;
-  color: #28a745;
-}
 .upload-note {
   display: block;
   margin-top: 6px;
@@ -295,7 +330,6 @@ input#monthsInOperation {
   font-size:small;
 }
 
-/* uploaded files container */
 .uploaded-files {
   display: flex;
   flex-wrap: wrap;
@@ -307,7 +341,7 @@ input#monthsInOperation {
   display: inline-flex;
   align-items: center;
   background: #f5f5f5;
-  border: 1px solid #ccc;
+  border: 1px solid #9ca3af;
   border-radius: 20px;
   padding: 6px 12px;
   font-size: 0.9rem;
@@ -418,7 +452,7 @@ button:hover {
 .btn-create {
   width: 150px; 
   text-align: center;
-  border-radius: 5px;
+  border-radius: 7px;
 }
 
 input:disabled,
@@ -435,12 +469,12 @@ select[disabled],
 select[readonly],
 textarea[disabled],
 textarea[readonly] {
-  background-color: #f0f0f0 !important; /* greyish shade */
-  color: #495057; /* text readable grey */
-  cursor: not-allowed; /* optional */
+  background-color: #f0f0f0 !important; 
+  color: #495057; 
+  cursor: not-allowed; 
 }
 
-/* ========== MODALS ========== */
+/* ========== MODAL ========== */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -497,11 +531,40 @@ textarea[readonly] {
   background-color: #218838;
 }
 
+input[type="checkbox"] {
+  appearance: none; 
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 1px solid none; 
+  border-radius: 0; 
+  background-color: lightgrey;
+  cursor: pointer;
+  position: relative;
+}
 
-/* ========== GENERAL STYLES ========== */
-input[type="checkbox"],
+/* Checked state */
+input[type="checkbox"]:checked {
+  background-color: #22c55e; 
+  border-color: #22c55e;
+}
+
+/* Tick mark inside */
+input[type="checkbox"]:checked::after {
+  content: "✔";
+  font-size: 14px;
+  color: white;
+  position: absolute;
+  top: -2px;
+  left: 2px;
+}
+
 input[type="radio"] {
+  width: 19px;     
+  height: 19px;
   accent-color: #28a745;
+  cursor: pointer;
 }
 
 .error-message {
@@ -513,11 +576,39 @@ input[type="radio"] {
 /* ========== RESPONSIVE ========== */
 @media (max-width: 768px) {
   .form-row.row-6,
-  .form-row.row-3 ,
+  .form-row.row-3,
   .form-row {
     grid-template-columns: 1fr;
   }
+
   select#applicationSource {
     width: 60%;
   }
+
+  .form-row.years-months {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0 1.2rem; 
+    gap: 1rem;
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  .years-months .right-section {
+    justify-content: flex-start; 
+    padding-right: 0;
+    width: 100%;
+  }
+
+  .inline-inputs {
+    justify-content: flex-start;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .inline-inputs input {
+    flex: 1; 
+    min-width: 100px;
+  }
 }
+

@@ -4,9 +4,9 @@
     <div class="spinner"></div>
   </div>
 
-  
+
   <div class="card-container">
-    
+
     <div class="header-row">
       <h1>Retailer Onboarding</h1>
       <button class="create-btn" (click)="createNewApplication()">+ Create New Application</button>
@@ -118,10 +118,7 @@
       <span class="dots" *ngIf="currentPage > 3">…</span>
 
       <ng-container *ngFor="let page of [currentPage - 1, currentPage, currentPage + 1]">
-        <button
-          class="page-btn"
-          *ngIf="page > 1 && page < totalPages"
-          (click)="goToPage(page)"
+        <button class="page-btn" *ngIf="page > 1 && page < totalPages" (click)="goToPage(page)"
           [class.active]="currentPage === page">
           {{ page }}
         </button>
@@ -129,10 +126,7 @@
 
       <span class="dots" *ngIf="currentPage < totalPages - 2">…</span>
 
-      <button
-        class="page-btn"
-        *ngIf="totalPages > 1"
-        (click)="goToPage(totalPages)"
+      <button class="page-btn" *ngIf="totalPages > 1" (click)="goToPage(totalPages)"
         [class.active]="currentPage === totalPages">
         {{ totalPages }}
       </button>
